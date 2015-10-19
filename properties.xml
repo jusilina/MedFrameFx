@@ -1,0 +1,175 @@
+﻿<?xml version="1.1" encoding="UTF-8" ?>
+<parameters>
+    <category>
+		<name>Дисциркуляторная энцефалопатия</name>
+        <diagnosis>Дисциркуляторная энцефалопатия 1,2,3 ст, с цефалгическим, вестибулопатическим синдромами,эмоционально-волевыми, мнестическими нарушениями</diagnosis>
+		<drugs/>
+	</category>
+    <category>
+		<name>Вертеброгенная патология</name>
+        <diagnosis>Вертеброгенная цервикокраниалгия, цервикалгия, торакалгия, люмбалгия, люмбоишалгия, Дискогенная радикулопатия  L5 , S1</diagnosis>
+        <drugs/>
+    </category>
+   
+    <category>
+		<name>Головная боль</name>
+        <diagnosis>Головные боль напряжения, абузусная головная боль, мигрень</diagnosis>
+		<drugs/>
+    </category>
+    <category>
+		<name>Паркинсонизм</name>
+        <diagnosis>Болезнь Паркинсона, акинетико-ригидно-дрожательная форма, ригидно-дрожательная форма, акинетико-ригидная форма, легкие умеренные, выраженные,  когнитивные нарушения, эмоционально-волевые нарушения, моторные флуктуации , дискинезии пика дозы ,  постуральная неустойчивость, 3 стадия по Хен-Яр.</diagnosis>
+		<drugs/>
+	</category>
+    <partOfBody>поясница</partOfBody>
+    <partOfBody>шея</partOfBody>
+    <partOfBody>грудной отдел</partOfBody>
+    
+    <dose>внутримышечно № 10</dose>
+    <dose>внутримышечно № 5</dose>
+    <dose>внутримышечно № 5-10</dose>
+    <dose>внутримышечно № 3-6</dose>
+    <dose>внутривенно № 10</dose>
+    <dose>внутривенно № 5</dose>
+    <dose>по схеме 2-3-4-5-5-4-3-2 ml</dose>
+
+    <dose>1  таб  1-2 раза в день</dose>
+    <dose>1  таб  1 раза в день</dose>
+    <dose>1  таб  2 раза в день</dose>
+    <dose>1  таб  2-3 раза в день</dose>
+    <dose>1  таб  3 раза в день</dose>
+    
+
+    <joint>колено</joint>
+
+    <conscious>ясное</conscious>
+    <conscious>оглушенность</conscious>
+    
+	<!-- Жалобы -->
+	<complaint>боли в шее</complaint>
+	<complaint>боли в грудном отделе</complaint>
+	<complaint>боли в поясничном отделе</complaint>
+	<complaint>ограничения движения ШОП</complaint>
+	<complaint>ограничения движения ГОП</complaint>
+	<complaint>ограничения движения ПКО</complaint>
+
+	
+	
+    <disturbed_sleep>трудность засыпания</disturbed_sleep>
+    <disturbed_sleep>частые пробуждения</disturbed_sleep>
+    <disturbed_sleep>раннее пробуждение</disturbed_sleep>
+ 
+	
+    <!-- Эмоциональная сфера нарушения -->   
+    <emotion>эмоциональная лабильность</emotion>
+    <emotion>астенизация</emotion>
+    <emotion>критика снижена</emotion>
+    <emotion>ипохондричность</emotion>
+    
+    <cranicalNerve>слабость зрачковых реакций</cranicalNerve>
+    <cranicalNerve>снижение слуха</cranicalNerve>
+    <cranicalNerve>снижение зрени</cranicalNerve>
+    <cranicalNerve>гипомимия</cranicalNerve>
+    
+    <nervousSystem>дермографизм розовый</nervousSystem>
+    <nervousSystem>дермографизм красный</nervousSystem>
+    <nervousSystem>дермографизм белый</nervousSystem>
+    <nervousSystem>дермографизм широкий</nervousSystem>
+    <nervousSystem>дермографизм узкий</nervousSystem>
+    <nervousSystem>дермографизм быстроисчезающий</nervousSystem>
+    <nervousSystem>гипергидроз  ладоней</nervousSystem>
+    
+    <rombergManeuver>устойчив</rombergManeuver>
+    <rombergManeuver>пошатывается</rombergManeuver>
+    <rombergManeuver>падает вправо</rombergManeuver>
+    <rombergManeuver>падает влево</rombergManeuver>
+    
+    <coordinationTests>неуверенно</coordinationTests>
+    <coordinationTests>промахивается</coordinationTests>
+    <coordinationTests>интенция</coordinationTests>
+    <coordinationTests>атаксия</coordinationTests>
+    
+    <sensitivityDisbalance>гипестезия</sensitivityDisbalance>
+    <sensitivityDisbalance>анестезия</sensitivityDisbalance>
+    <sensitivityDisbalance>гиперстезия</sensitivityDisbalance>
+    
+    <nervousTension>с-м Нери</nervousTension>
+    <nervousTension>с-м Ласега D</nervousTension>
+    <nervousTension>с-м Ласега S</nervousTension>
+	<nervousTension>с-м Вассермана D</nervousTension>
+    <nervousTension>с-м Вассермана S</nervousTension>
+    <nervousTension>парестезии</nervousTension>
+    
+	<limbReflexes>сохранены</limbReflexes>
+	<limbReflexes>снижены</limbReflexes>
+	<limbReflexes>торпидны</limbReflexes>
+	<limbReflexes>оживлены</limbReflexes>
+	
+    <pReflexesHand>Ласк</pReflexesHand>
+    <pReflexesHand>Бехтерев</pReflexesHand>
+    <pReflexesHand>Тремнер</pReflexesHand>
+    
+    <pReflexesLeg>Бабинский</pReflexesLeg>
+    <pReflexesLeg>Гордон</pReflexesLeg>
+    <pReflexesLeg>Чаддок</pReflexesLeg>
+    <pReflexesLeg>Россолимо</pReflexesLeg>
+    
+    <aReflexes>хоботковый</aReflexes>
+    <aReflexes>Маринеску-Радовичи</aReflexes>
+    <muscleTone>повышен в паравебральных мышцах ШОП</muscleTone>
+	<muscleTone>повышен в паравебральных мышцах ГОП</muscleTone>
+	<muscleTone>повышен в паравебральных мышцах ПКО</muscleTone>
+    <muscleTone>снижен</muscleTone>
+    <muscleTone>болезненность при пальпации ШОП</muscleTone>
+    <muscleTone>болезненность при пальпации ГОП</muscleTone>
+    <muscleTone>болезненность при пальпации ПКО</muscleTone>
+    <motion>в полном объеме</motion>
+    <motion>ограничены ШОП</motion>
+    <motion>ограничены ГОП</motion>
+    <motion>ограничены ПКО</motion>
+	<motion>ограничены в плечевом суставе</motion>
+	<motion>ограничены в тазобедренном суставе</motion>
+    
+	<recommendation>консультация офтальмолога(глазное дно)</recommendation>	
+	<recommendation>УЗДГ МАГ</recommendation>
+	<recommendation>липидный профиль</recommendation>
+	<recommendation>МНО</recommendation>
+	<recommendation>фибриноген</recommendation>
+	<recommendation>МРТ головного мозга</recommendation>
+	<recommendation>КТ головного мозга</recommendation>
+    <recommendation>ОАК</recommendation>
+    <recommendation>ОАМ</recommendation>
+    <recommendation>ЭКГ</recommendation>
+    <recommendation>ФЛГ</recommendation>
+    <recommendation>сахар крови</recommendation>
+    <recommendation>КТ ШОП</recommendation>
+    <recommendation>КТ ГОП</recommendation>
+    <recommendation>КТ ПКО</recommendation>
+    <recommendation>МРТ ШОП</recommendation>
+    <recommendation>МРТ ГОП</recommendation>
+    <recommendation>МРТ ПКО</recommendation>
+    <recommendation>ЭНМГ рук</recommendation>
+	<recommendation>ЭНМГ ног</recommendation>
+	<recommendation>миоглобин</recommendation>
+	<recommendation>КФК</recommendation>
+	<recommendation>C-реактивный белок</recommendation>
+	<recommendation>ревматоидный фактор</recommendation>
+	<recommendation>ЭЭГ</recommendation>
+
+	<recommendation>рентгенография ШОП</recommendation>
+    
+    <therapy>ЛФК постоянно</therapy>
+    <therapy>ФТЛ</therapy>
+    
+    <coordinationTest>неуверенно</coordinationTest>
+    <coordinationTest>промахивается</coordinationTest>
+    <coordinationTest>интенция</coordinationTest>
+    <coordinationTest>атаксия</coordinationTest>
+	
+	<pelvicOrgan>задержка мочи</pelvicOrgan>
+	<pelvicOrgan>недержание мочи</pelvicOrgan>
+	<pelvicOrgan>запоры</pelvicOrgan>
+	<pelvicOrgan>императивные порывы к мочеиспусканию</pelvicOrgan>
+
+    
+</parameters>
