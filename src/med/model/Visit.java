@@ -31,6 +31,8 @@ public class Visit implements PropertyNames{
     private StringProperty consciousAdd;
     private StringProperty epileptic;
     private StringProperty category;
+    private ObservableList<String> emotion = FXCollections.observableArrayList();
+    private ObservableList<String> dream = FXCollections.observableArrayList();
 
     public Visit() {
         initialise();
@@ -195,10 +197,25 @@ public class Visit implements PropertyNames{
         this.category.set(category);
     }
 
+    public ObservableList<String> getEmotion() {
+        return emotion;
+    }
+
+    public void setEmotion(ObservableList<String> emotion) {
+        this.emotion = emotion;
+    }
+
+    public ObservableList<String> getDream() {
+        return dream;
+    }
+
+    public void setDream(ObservableList<String> dream) {
+        this.dream = dream;
+    }
+
     public void clear() {
         initialise();
     }
-
 
 
     public void clone(Visit visit) {

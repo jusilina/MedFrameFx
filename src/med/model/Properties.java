@@ -14,6 +14,8 @@ import java.util.List;
 public class Properties {
     private List<Category> categories;
     private List<String> complaints;
+    private List<String> emotions;
+    private List<String> disturbed_sleep;
 
     @XmlElement(name = "category")
     public List<Category> getCategories() {
@@ -31,5 +33,23 @@ public class Properties {
 
     public void setComplaints(List<String> complaints) {
         this.complaints = complaints;
+    }
+
+    @XmlElement(name = "emotion")
+    public List<String> getEmotions() {
+        return emotions;
+    }
+
+    public void setEmotions(List<String> emotions) {
+        this.emotions = emotions;
+    }
+
+    @XmlElement(name = "disturbed_sleep")
+    public List<String> getDisturbed_sleep() {
+        return disturbed_sleep;
+    }
+
+    public void setDisturbed_sleep(List<String> disturbed_sleep) {
+        this.disturbed_sleep = disturbed_sleep;
     }
 }

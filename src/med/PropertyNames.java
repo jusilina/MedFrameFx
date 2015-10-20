@@ -51,7 +51,7 @@ public interface PropertyNames {
 
     static final String DREAM = "Сон:";
     static final String NORM = "норма";
-    static final String DISBALANCE = "нарушен";
+    static final String DISTURBED = "нарушен";
     static final String N = "N";
     static final String NO = "нет";
     static final String THESE_IS = "есть";

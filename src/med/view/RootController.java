@@ -57,10 +57,19 @@ public class RootController {
     private TextField consciousText;
     @FXML
     private TextField epiText;
-
+    @FXML
+    private ComboBox emotionMainBox;
+    @FXML
+    private ComboBox dreamComboBox;
+    @FXML
+    private GridPane emotionPain;
+    @FXML
+    private GridPane dreamPain;
 
 
     private CheckComboBox<String> complaintCheckComboBox;
+    private CheckComboBox<String> emotionCheckComboBox;
+    private CheckComboBox<String> dreamCheckComboBox;
 
     public RootController() {
     }
@@ -89,13 +98,46 @@ public class RootController {
         ObservableList<String> selectedComplaintItems = complaintCheckComboBox.getCheckModel().getCheckedItems();
         if (!visit.getComplaintList().isEmpty()) {
             complaintCheckComboBox.getCheckModel().clearChecks();
-            visit.getComplaintList().forEach(s ->  complaintCheckComboBox.getCheckModel().check(s));
+            visit.getComplaintList().forEach(s -> complaintCheckComboBox.getCheckModel().check(s));
         }
 
         selectedComplaintItems.addListener((ListChangeListener) changed -> {
             while (changed.next()) {
                 if (changed.wasAdded()) visit.getComplaintList().addAll(changed.getAddedSubList());
                 else if (changed.wasRemoved()) visit.getComplaintList().removeAll(changed.getRemoved());
+            }
+        });
+
+
+        emotionCheckComboBox.getCheckModel().clearChecks();
+        if (!visit.getEmotion().isEmpty()) {
+            emotionMainBox.getSelectionModel().select(PropertyNames.DISTURBED);
+            visit.getEmotion().forEach(s -> emotionCheckComboBox.getCheckModel().check(s));
+        } else {
+            emotionMainBox.getSelectionModel().select(PropertyNames.NORM);
+        }
+
+        ObservableList<String> selectedEmotionItems = emotionCheckComboBox.getCheckModel().getCheckedItems();
+        selectedEmotionItems.addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getEmotion().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getEmotion().removeAll(changed.getRemoved());
+            }
+        });
+
+        dreamCheckComboBox.getCheckModel().clearChecks();
+        if (!visit.getDream().isEmpty()) {
+            dreamComboBox.getSelectionModel().select(PropertyNames.DISTURBED);
+            visit.getDream().forEach(s -> dreamCheckComboBox.getCheckModel().check(s));
+        } else {
+            dreamComboBox.getSelectionModel().select(PropertyNames.NORM);
+        }
+
+        ObservableList<String> selectedDreamItems = dreamCheckComboBox.getCheckModel().getCheckedItems();
+        selectedDreamItems.addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getDream().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getDream().removeAll(changed.getRemoved());
             }
         });
 
@@ -111,6 +153,12 @@ public class RootController {
         complaintCheckComboBox = new CheckComboBox<String>();
         complaintPain.add(complaintCheckComboBox, 0, 0);
 
+        emotionCheckComboBox = new CheckComboBox<>();
+        emotionPain.add(emotionCheckComboBox, 0, 0);
+
+        dreamCheckComboBox = new CheckComboBox<>();
+        dreamPain.add(dreamCheckComboBox, 0, 0);
+
         jobComboBox.getItems().addAll(PropertyNames.WORKING, PropertyNames.NOT_WORKING, PropertyNames.PENSIONER, PropertyNames.CRIPPLE);
         stressComboBox.getItems().addAll(PropertyNames.EXERCISE_STRESS, PropertyNames.STATIC_LOAD);
 
@@ -122,6 +170,31 @@ public class RootController {
                 professionGroup.setVisible(false);
             }
         });
+
+        consciousBox.getItems().addAll(PropertyNames.CONSCIOUS_CLEAR, PropertyNames.CONSCIOUS_OBNUBILATION);
+        emotionMainBox.getItems().addAll(PropertyNames.NORM, PropertyNames.DISTURBED);
+        dreamComboBox.getItems().addAll(PropertyNames.NORM, PropertyNames.DISTURBED);
+
+        emotionMainBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.equals(PropertyNames.NORM)) {
+                        emotionPain.setVisible(false);
+                        emotionCheckComboBox.getCheckModel().clearChecks();
+                    } else {
+                        emotionPain.setVisible(true);
+                    }
+                }
+        );
+
+        dreamComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.equals(PropertyNames.NORM)) {
+                        dreamPain.setVisible(false);
+                        dreamCheckComboBox.getCheckModel().clearChecks();
+                    } else {
+                        dreamPain.setVisible(true);
+                    }
+                }
+        );
+
         // and listen to the relevant events (e.g. when the selected indices or
         // selected items change).
 //        checkComboBox.getCheckModel().getSelectedItems().addListener(new ListChangeListener<String>() {
@@ -130,9 +203,14 @@ public class RootController {
 //            }
 //        });
 
-
+        setDefaultValue();
     }
 
+
+    private void setDefaultValue() {
+        emotionMainBox.getSelectionModel().select(PropertyNames.NORM);
+        dreamComboBox.getSelectionModel().select(PropertyNames.NORM);
+    }
 
     private void showVisitDetails() {
         if (visit != null) {
@@ -257,6 +335,9 @@ public class RootController {
 
         properties.getCategories().forEach(category -> categoryBox.getItems().add(category.getName()));
         properties.getComplaints().forEach(complaint -> complaintCheckComboBox.getItems().add(complaint));
+
+        properties.getEmotions().forEach(emotion -> emotionCheckComboBox.getItems().add(emotion));
+        properties.getDisturbed_sleep().forEach(s -> dreamCheckComboBox.getItems().add(s));
     }
 }
 
