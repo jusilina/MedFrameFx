@@ -4,22 +4,17 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import med.model.Category;
 import med.model.Properties;
 import med.model.Visit;
 import med.view.RootController;
-import org.controlsfx.dialog.Dialogs;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -27,7 +22,7 @@ import java.util.prefs.Preferences;
 public class Main extends Application {
     Logger logger = Logger.getLogger(Main.class.getName());
     private Stage primaryStage;
-    private BorderPane rootLayout;
+//    private BorderPane rootLayout;
     private Properties properties;
     private  RootController controller;
 
@@ -112,7 +107,7 @@ public class Main extends Application {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/RootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
+            BorderPane rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);

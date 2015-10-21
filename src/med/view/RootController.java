@@ -1,23 +1,19 @@
 package med.view;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import med.Main;
 import med.PropertyNames;
 import med.model.Properties;
 import med.model.Visit;
 import org.controlsfx.control.CheckComboBox;
-import org.controlsfx.dialog.Dialogs;
+import org.controlsfx.control.CheckModel;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -65,11 +61,19 @@ public class RootController {
     private GridPane emotionPain;
     @FXML
     private GridPane dreamPain;
+    @FXML
+    private ComboBox sensitivityMainBox;
+    @FXML
+    private GridPane sensitivityPain;
+    @FXML
+    private GridPane cranicalNervePain;
 
 
     private CheckComboBox<String> complaintCheckComboBox;
     private CheckComboBox<String> emotionCheckComboBox;
     private CheckComboBox<String> dreamCheckComboBox;
+    private CheckComboBox<String> cranicalNerveBox;
+    private CheckComboBox<String> sensitivityDisbalanceBox;
 
     public RootController() {
     }
@@ -96,8 +100,8 @@ public class RootController {
          * Select items in complaint list. Add listener to populate visit.complaintList with selected items
          */
         ObservableList<String> selectedComplaintItems = complaintCheckComboBox.getCheckModel().getCheckedItems();
+        complaintCheckComboBox.getCheckModel().clearChecks();
         if (!visit.getComplaintList().isEmpty()) {
-            complaintCheckComboBox.getCheckModel().clearChecks();
             visit.getComplaintList().forEach(s -> complaintCheckComboBox.getCheckModel().check(s));
         }
 
@@ -142,6 +146,35 @@ public class RootController {
         });
 
 
+        CheckModel sensitivityDisbalanceBoxCheckModel = sensitivityDisbalanceBox.getCheckModel();
+        sensitivityDisbalanceBoxCheckModel.clearChecks();
+        if (!visit.getSensitivity().isEmpty()) {
+            sensitivityMainBox.getSelectionModel().select(PropertyNames.DISTURBED);
+            visit.getSensitivity().forEach(s -> sensitivityDisbalanceBoxCheckModel.check(s));
+        } else {
+            sensitivityMainBox.getSelectionModel().select(PropertyNames.NORM);
+        }
+
+        sensitivityDisbalanceBoxCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getSensitivity().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getSensitivity().removeAll(changed.getRemoved());
+            }
+        });
+
+        cranicalNerveBox.getCheckModel().clearChecks();
+        if (!visit.getCranicalNerve().isEmpty()) {
+            visit.getCranicalNerve().forEach(s -> cranicalNerveBox.getCheckModel().check(s));
+        }
+
+        cranicalNerveBox.getCheckModel().getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getCranicalNerve().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getCranicalNerve().removeAll(changed.getRemoved());
+            }
+        });
+
+
         log.info("set visit");
     }
 
@@ -150,7 +183,7 @@ public class RootController {
         showVisitDetails();
         log.info("initialise RootController");
 
-        complaintCheckComboBox = new CheckComboBox<String>();
+        complaintCheckComboBox = new CheckComboBox<>();
         complaintPain.add(complaintCheckComboBox, 0, 0);
 
         emotionCheckComboBox = new CheckComboBox<>();
@@ -158,6 +191,8 @@ public class RootController {
 
         dreamCheckComboBox = new CheckComboBox<>();
         dreamPain.add(dreamCheckComboBox, 0, 0);
+
+
 
         jobComboBox.getItems().addAll(PropertyNames.WORKING, PropertyNames.NOT_WORKING, PropertyNames.PENSIONER, PropertyNames.CRIPPLE);
         stressComboBox.getItems().addAll(PropertyNames.EXERCISE_STRESS, PropertyNames.STATIC_LOAD);
@@ -195,13 +230,23 @@ public class RootController {
                 }
         );
 
-        // and listen to the relevant events (e.g. when the selected indices or
-        // selected items change).
-//        checkComboBox.getCheckModel().getSelectedItems().addListener(new ListChangeListener<String>() {
-//            public void onChanged(ListChangeListener.Change<? extends String> c) {
-//                System.out.println(checkComboBox.getCheckModel().getSelectedItems());
-//            }
-//        });
+        cranicalNerveBox = new CheckComboBox<>();
+        cranicalNervePain.add(cranicalNerveBox, 0, 0);
+
+        sensitivityDisbalanceBox = new CheckComboBox<>();
+        sensitivityPain.add(sensitivityDisbalanceBox, 0, 0);
+        sensitivityMainBox.getItems().addAll(PropertyNames.NORM, PropertyNames.DISTURBED);
+
+        sensitivityMainBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.equals(PropertyNames.NORM)) {
+                        sensitivityPain.setVisible(false);
+                        sensitivityDisbalanceBox.getCheckModel().clearChecks();
+                    } else {
+                        sensitivityPain.setVisible(true);
+                    }
+                }
+        );
+
 
         setDefaultValue();
     }
@@ -210,6 +255,7 @@ public class RootController {
     private void setDefaultValue() {
         emotionMainBox.getSelectionModel().select(PropertyNames.NORM);
         dreamComboBox.getSelectionModel().select(PropertyNames.NORM);
+        sensitivityMainBox.getSelectionModel().select(PropertyNames.NORM);
     }
 
     private void showVisitDetails() {
@@ -315,11 +361,10 @@ public class RootController {
      */
     @FXML
     private void handleAbout() {
-        Dialogs.create()
-                .title("AddressApp")
-                .masthead("About")
-                .message("Author: Marco Jakob\nWebsite: http://code.makery.ch")
-                .showInformation();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Info");
+        alert.showAndWait();
+
     }
 
     /**
@@ -338,6 +383,9 @@ public class RootController {
 
         properties.getEmotions().forEach(emotion -> emotionCheckComboBox.getItems().add(emotion));
         properties.getDisturbed_sleep().forEach(s -> dreamCheckComboBox.getItems().add(s));
+
+        properties.getCranicalNerve().forEach(nerve -> cranicalNerveBox.getItems().add(nerve));
+        properties.getSensitivityDisbalance().forEach(sens -> sensitivityDisbalanceBox.getItems().add(sens));
     }
 }
 

@@ -10,14 +10,9 @@ import med.util.LocalDateAdapter;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.logging.Logger;
 
-/**
- * Created by Julia on 05.10.2015.
- */
 @XmlRootElement(name = "visit")
-public class Visit implements PropertyNames{
+public class Visit implements PropertyNames {
 
     private StringProperty name;
     private ObjectProperty<LocalDate> date;
@@ -33,6 +28,8 @@ public class Visit implements PropertyNames{
     private StringProperty category;
     private ObservableList<String> emotion = FXCollections.observableArrayList();
     private ObservableList<String> dream = FXCollections.observableArrayList();
+    private ObservableList<String> cranicalNerve;
+    private ObservableList<String> sensitivity;
 
     public Visit() {
         initialise();
@@ -41,7 +38,7 @@ public class Visit implements PropertyNames{
     private void initialise() {
         this.name = new SimpleStringProperty();
         this.complaint = new SimpleStringProperty();
-        this.date = new SimpleObjectProperty<LocalDate>(LocalDate.now());
+        this.date = new SimpleObjectProperty<>(LocalDate.now());
 
         socialAnamnesis = new SimpleStringProperty();
         profession = new SimpleStringProperty();
@@ -52,6 +49,8 @@ public class Visit implements PropertyNames{
         epileptic = new SimpleStringProperty(NEG);
 
         category = new SimpleStringProperty();
+        cranicalNerve = FXCollections.observableArrayList();
+        sensitivity = FXCollections.observableArrayList();
     }
 
 
@@ -211,6 +210,22 @@ public class Visit implements PropertyNames{
 
     public void setDream(ObservableList<String> dream) {
         this.dream = dream;
+    }
+
+    public ObservableList<String> getCranicalNerve() {
+        return cranicalNerve;
+    }
+
+    public void setCranicalNerve(ObservableList<String> cranicalNerve) {
+        this.cranicalNerve = cranicalNerve;
+    }
+
+    public ObservableList<String> getSensitivity() {
+        return sensitivity;
+    }
+
+    public void setSensitivity(ObservableList<String> sensitivity) {
+        this.sensitivity = sensitivity;
     }
 
     public void clear() {

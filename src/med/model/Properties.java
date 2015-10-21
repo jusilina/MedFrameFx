@@ -1,21 +1,17 @@
 package med.model;
 
-import javafx.collections.ObservableList;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Julia on 08.10.2015.
- */
 @XmlRootElement(name = "parameters")
 public class Properties {
     private List<Category> categories;
     private List<String> complaints;
     private List<String> emotions;
     private List<String> disturbed_sleep;
+    private List<String> cranicalNerve;
+    private List<String> sensitivityDisbalance;
 
     @XmlElement(name = "category")
     public List<Category> getCategories() {
@@ -51,5 +47,23 @@ public class Properties {
 
     public void setDisturbed_sleep(List<String> disturbed_sleep) {
         this.disturbed_sleep = disturbed_sleep;
+    }
+
+    @XmlElement(name = "cranicalNerve")
+    public List<String> getCranicalNerve() {
+        return cranicalNerve;
+    }
+
+    public void setCranicalNerve(List<String> cranicalNerve) {
+        this.cranicalNerve = cranicalNerve;
+    }
+
+    @XmlElement(name = "sensitivityDisbalance")
+    public List<String> getSensitivityDisbalance() {
+        return sensitivityDisbalance;
+    }
+
+    public void setSensitivityDisbalance(List<String> sensitivityDisbalance) {
+        this.sensitivityDisbalance = sensitivityDisbalance;
     }
 }
