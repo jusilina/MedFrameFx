@@ -3,12 +3,11 @@
 <?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="med.view.RootController">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="661.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="med.view.RootController">
     <top>
-        <MenuBar snapToPixel="false" BorderPane.alignment="CENTER">
+        <MenuBar prefHeight="27.0" prefWidth="651.0" snapToPixel="false" BorderPane.alignment="TOP_LEFT">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
@@ -31,14 +30,14 @@
                 </Menu>
             </menus>
          <BorderPane.margin>
-            <Insets left="10.0" />
+            <Insets />
          </BorderPane.margin>
         </MenuBar>
     </top>
    <center>
-      <ScrollPane prefHeight="265.0" prefWidth="637.0" BorderPane.alignment="CENTER">
+      <ScrollPane prefHeight="582.0" prefWidth="653.0" BorderPane.alignment="CENTER">
          <content>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="452.0" prefWidth="629.0">
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="653.0" prefWidth="646.0">
             <children>
                   <Label layoutX="186.0" layoutY="4.0" prefHeight="21.0" prefWidth="197.0" text="Осмотр невролога (на дому)" textAlignment="CENTER" AnchorPane.topAnchor="10.0" />
                   <VBox layoutX="26.87109375" layoutY="35.0" spacing="5.0">
@@ -170,6 +169,42 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                               </GridPane>
+                           </children>
+                        </HBox>
+                        <HBox spacing="10.0">
+                           <children>
+                              <Label layoutX="27.0" layoutY="400.0" text="болевые симптомы натяжения нервных стволов:" />
+                              <ComboBox fx:id="nervousTensionMainBox" layoutX="308.0" layoutY="396.0" prefWidth="150.0" />
+                              <GridPane fx:id="nervousTensionPain" layoutX="447.0" layoutY="396.0" prefHeight="25.0" prefWidth="150.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                              </GridPane>
+                           </children>
+                        </HBox>
+                        <HBox spacing="10.0">
+                           <children>
+                              <Label layoutX="27.0" layoutY="428.0" text="Рефлексы с верхних конечностей" />
+                              <ComboBox fx:id="upperLimbsBox" layoutX="218.0" layoutY="433.0" prefHeight="25.0" prefWidth="107.0" />
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <RadioButton fx:id="d_e_s_U" layoutX="340.0" layoutY="428.0" mnemonicParsing="false" text="D = S" />
+                                    <RadioButton fx:id="d_m_s_U" layoutX="340.0" layoutY="474.0" mnemonicParsing="false" text="D &gt; S" />
+                                    <RadioButton fx:id="d_l_s_U" layoutX="340.0" layoutY="450.0" mnemonicParsing="false" text="D &lt; S" />
+                                 </children>
+                              </VBox>
+                              <Label layoutX="400.0" layoutY="437.0" text="нижних" />
+                              <ComboBox fx:id="downLimbsBox" layoutX="453.0" layoutY="433.0" prefHeight="25.0" prefWidth="107.0" />
+                              <VBox spacing="5.0">
+                                 <children>
+                                    <RadioButton fx:id="d_e_s_D" mnemonicParsing="false" text="D = S" />
+                                    <RadioButton fx:id="d_m_s_D" mnemonicParsing="false" text="D &gt; S" />
+                                    <RadioButton fx:id="d_l_s_D" mnemonicParsing="false" text="D &lt; S" />
+                                 </children>
+                              </VBox>
                            </children>
                         </HBox>
                      </children>

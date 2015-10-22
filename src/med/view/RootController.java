@@ -67,6 +67,26 @@ public class RootController {
     private GridPane sensitivityPain;
     @FXML
     private GridPane cranicalNervePain;
+    @FXML
+    private ComboBox nervousTensionMainBox;
+    @FXML
+    private GridPane nervousTensionPain;
+    @FXML
+    private ComboBox upperLimbsBox;
+    @FXML
+    private ComboBox downLimbsBox;
+    @FXML
+    private RadioButton d_e_s_U;
+    @FXML
+    private RadioButton d_m_s_U;
+    @FXML
+    private RadioButton d_l_s_U;
+    @FXML
+    private RadioButton d_e_s_D;
+    @FXML
+    private RadioButton d_m_s_D;
+    @FXML
+    private RadioButton d_l_s_D;
 
 
     private CheckComboBox<String> complaintCheckComboBox;
@@ -74,6 +94,7 @@ public class RootController {
     private CheckComboBox<String> dreamCheckComboBox;
     private CheckComboBox<String> cranicalNerveBox;
     private CheckComboBox<String> sensitivityDisbalanceBox;
+    private CheckComboBox<String> nervousTensionBox;
 
     public RootController() {
     }
@@ -175,6 +196,58 @@ public class RootController {
         });
 
 
+        CheckModel neCheckModel = nervousTensionBox.getCheckModel();
+        neCheckModel.clearChecks();
+        if (!visit.getNervousTension().isEmpty()) {
+            nervousTensionMainBox.getSelectionModel().select(PropertyNames.THESE_IS);
+            visit.getNervousTension().forEach(s -> neCheckModel.check(s));
+        } else {
+            nervousTensionMainBox.getSelectionModel().select(PropertyNames.NO);
+        }
+
+        neCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getNervousTension().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getNervousTension().removeAll(changed.getRemoved());
+            }
+        });
+
+        Bindings.bindBidirectional(upperLimbsBox.valueProperty(), visit.upperLimbReflexesProperty());
+        Bindings.bindBidirectional(downLimbsBox.valueProperty(), visit.downLimbReflexesProperty());
+
+        ToggleGroup upperDSLimbsGroup = new ToggleGroup();
+        ToggleGroup downDSLimbsGroup = new ToggleGroup();
+
+        upperDSLimbsGroup.getToggles().addAll(d_e_s_U, d_l_s_U, d_m_s_U);
+        downDSLimbsGroup.getToggles().addAll(d_e_s_D, d_l_s_D, d_m_s_D);
+
+        upperDSLimbsGroup.selectedToggleProperty().addListener(observable -> {
+                    if (null != upperDSLimbsGroup.getSelectedToggle())
+                        visit.setUpperDSLimb(upperDSLimbsGroup.getSelectedToggle().getUserData().toString());
+                }
+        );
+
+        downDSLimbsGroup.selectedToggleProperty().addListener(observable -> {
+                    if (null != downDSLimbsGroup.getSelectedToggle())
+                        visit.setLowerDSLimb(downDSLimbsGroup.getSelectedToggle().getUserData().toString());
+                }
+        );
+
+        String upperDSLimb = visit.getUpperDSLimb();
+        upperDSLimbsGroup.getToggles().forEach(toggle -> {
+            if (toggle.getUserData().equals(upperDSLimb)) {
+                upperDSLimbsGroup.selectToggle(toggle);
+            }
+        });
+
+        String downDSLimb = visit.getLowerDSLimb();
+        downDSLimbsGroup.getToggles().forEach(toggle -> {
+            if (toggle.getUserData().equals(downDSLimb)) {
+                downDSLimbsGroup.selectToggle(toggle);
+            }
+        });
+
+
         log.info("set visit");
     }
 
@@ -191,7 +264,6 @@ public class RootController {
 
         dreamCheckComboBox = new CheckComboBox<>();
         dreamPain.add(dreamCheckComboBox, 0, 0);
-
 
 
         jobComboBox.getItems().addAll(PropertyNames.WORKING, PropertyNames.NOT_WORKING, PropertyNames.PENSIONER, PropertyNames.CRIPPLE);
@@ -247,7 +319,29 @@ public class RootController {
                 }
         );
 
+        nervousTensionBox = new CheckComboBox<>();
+        nervousTensionPain.add(nervousTensionBox, 0, 0);
+        nervousTensionMainBox.getItems().addAll(PropertyNames.NO, PropertyNames.THESE_IS);
+        nervousTensionMainBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.equals(PropertyNames.NO)) {
+                        nervousTensionPain.setVisible(false);
+                        nervousTensionBox.getCheckModel().clearChecks();
+                    } else {
+                        nervousTensionPain.setVisible(true);
+                    }
+                }
+        );
 
+
+        d_e_s_U.setUserData("D=S");
+        d_e_s_U.setSelected(true);
+        d_l_s_U.setUserData("D<S");
+        d_m_s_U.setUserData("D>S");
+
+        d_e_s_D.setUserData("D=S");
+        d_e_s_D.setSelected(true);
+        d_l_s_D.setUserData("D<S");
+        d_m_s_D.setUserData("D>S");
         setDefaultValue();
     }
 
@@ -256,6 +350,7 @@ public class RootController {
         emotionMainBox.getSelectionModel().select(PropertyNames.NORM);
         dreamComboBox.getSelectionModel().select(PropertyNames.NORM);
         sensitivityMainBox.getSelectionModel().select(PropertyNames.NORM);
+        nervousTensionMainBox.getSelectionModel().select(PropertyNames.NO);
     }
 
     private void showVisitDetails() {
@@ -372,6 +467,7 @@ public class RootController {
      */
     @FXML
     private void handleExit() {
+        mainApp.setVisitFilePath(null);
         System.exit(0);
     }
 
@@ -386,6 +482,11 @@ public class RootController {
 
         properties.getCranicalNerve().forEach(nerve -> cranicalNerveBox.getItems().add(nerve));
         properties.getSensitivityDisbalance().forEach(sens -> sensitivityDisbalanceBox.getItems().add(sens));
+
+        properties.getNervousTension().forEach(tension -> nervousTensionBox.getItems().add(tension));
+
+        upperLimbsBox.getItems().addAll(properties.getLimbReflexes());
+        downLimbsBox.getItems().addAll(properties.getLimbReflexes());
     }
 }
 

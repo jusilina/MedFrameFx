@@ -30,6 +30,11 @@ public class Visit implements PropertyNames {
     private ObservableList<String> dream = FXCollections.observableArrayList();
     private ObservableList<String> cranicalNerve;
     private ObservableList<String> sensitivity;
+    private ObservableList<String> nervousTension;
+    private StringProperty upperLimbReflexes;
+    private StringProperty downLimbReflexes;
+    private StringProperty upperDSLimb;
+    private StringProperty lowerDSLimb;
 
     public Visit() {
         initialise();
@@ -51,6 +56,11 @@ public class Visit implements PropertyNames {
         category = new SimpleStringProperty();
         cranicalNerve = FXCollections.observableArrayList();
         sensitivity = FXCollections.observableArrayList();
+        nervousTension = FXCollections.observableArrayList();
+        upperLimbReflexes = new SimpleStringProperty();
+        downLimbReflexes = new SimpleStringProperty();
+        upperDSLimb = new SimpleStringProperty();
+        lowerDSLimb = new SimpleStringProperty();
     }
 
 
@@ -226,6 +236,62 @@ public class Visit implements PropertyNames {
 
     public void setSensitivity(ObservableList<String> sensitivity) {
         this.sensitivity = sensitivity;
+    }
+
+    public ObservableList<String> getNervousTension() {
+        return nervousTension;
+    }
+
+    public void setNervousTension(ObservableList<String> nervousTension) {
+        this.nervousTension = nervousTension;
+    }
+
+    public String getUpperLimbReflexes() {
+        return upperLimbReflexes.get();
+    }
+
+    public StringProperty upperLimbReflexesProperty() {
+        return upperLimbReflexes;
+    }
+
+    public void setUpperLimbReflexes(String upperLimbReflexes) {
+        this.upperLimbReflexes.set(upperLimbReflexes);
+    }
+
+    public String getDownLimbReflexes() {
+        return downLimbReflexes.get();
+    }
+
+    public StringProperty downLimbReflexesProperty() {
+        return downLimbReflexes;
+    }
+
+    public void setDownLimbReflexes(String downLimbReflexes) {
+        this.downLimbReflexes.set(downLimbReflexes);
+    }
+
+    public String getUpperDSLimb() {
+        return upperDSLimb.get();
+    }
+
+    public StringProperty upperDSLimbProperty() {
+        return upperDSLimb;
+    }
+
+    public void setUpperDSLimb(String upperDSLimb) {
+        this.upperDSLimb.set(upperDSLimb);
+    }
+
+    public String getLowerDSLimb() {
+        return lowerDSLimb.get();
+    }
+
+    public StringProperty lowerDSLimbProperty() {
+        return lowerDSLimb;
+    }
+
+    public void setLowerDSLimb(String lowerDSLimb) {
+        this.lowerDSLimb.set(lowerDSLimb);
     }
 
     public void clear() {
