@@ -6,15 +6,22 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import med.Main;
 import med.PropertyNames;
 import med.model.Properties;
 import med.model.Visit;
+import med.util.FilePrinter;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.CheckModel;
 
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import java.awt.*;
+import java.awt.print.*;
 import java.io.File;
 import java.util.logging.Logger;
 
@@ -488,5 +495,29 @@ public class RootController {
         upperLimbsBox.getItems().addAll(properties.getLimbReflexes());
         downLimbsBox.getItems().addAll(properties.getLimbReflexes());
     }
+
+    @FXML
+    private void handlePrint() {
+        log.info("Printing....");
+        PrinterJob job = PrinterJob.getPrinterJob();
+
+        PageFormat pf = job.pageDialog(job.defaultPage());
+        job.setPrintable(new FilePrinter(visit), pf);
+
+        //Call print dialog
+        boolean doPrint = job.printDialog();
+
+        if (doPrint) {
+            try {
+                job.print();
+            } catch (PrinterException e) {
+                e.printStackTrace();
+                log.finer(e.getStackTrace().toString());
+            }
+        }
+    }
+
+
+
 }
 
