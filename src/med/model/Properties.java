@@ -14,6 +14,8 @@ public class Properties {
     private List<String> sensitivityDisbalance;
     private List<String> nervousTension;
     private List<String> limbReflexes;
+    private List<String> pReflexesHand;
+    private List<String> pReflexesLeg;
 
     @XmlElement(name = "category")
     public List<Category> getCategories() {
@@ -85,5 +87,23 @@ public class Properties {
 
     public void setLimbReflexes(List<String> limbReflexes) {
         this.limbReflexes = limbReflexes;
+    }
+
+    @XmlElement(name = "pReflexesHand")
+    public List<String> getpReflexesHand() {
+        return pReflexesHand;
+    }
+
+    public void setpReflexesHand(List<String> pReflexesHand) {
+        this.pReflexesHand = pReflexesHand;
+    }
+
+    @XmlElement(name = "pReflexesLeg")
+    public List<String> getpReflexesLeg() {
+        return pReflexesLeg;
+    }
+
+    public void setpReflexesLeg(List<String> pReflexesLeg) {
+        this.pReflexesLeg = pReflexesLeg;
     }
 }

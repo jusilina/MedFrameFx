@@ -3,12 +3,15 @@ package med.view;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.shape.Box;
 import javafx.stage.FileChooser;
 import med.Main;
 import med.PropertyNames;
@@ -23,6 +26,7 @@ import javax.print.attribute.PrintRequestAttributeSet;
 import java.awt.*;
 import java.awt.print.*;
 import java.io.File;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class RootController {
@@ -94,6 +98,14 @@ public class RootController {
     private RadioButton d_m_s_D;
     @FXML
     private RadioButton d_l_s_D;
+    @FXML
+    private HBox pReflexesBox;
+    @FXML
+    private ToggleButton pReflexesButton;
+    @FXML
+    private GridPane pReflexesLegPane;
+    @FXML
+    private GridPane pReflexesHandPane;
 
 
     private CheckComboBox<String> complaintCheckComboBox;
@@ -102,6 +114,8 @@ public class RootController {
     private CheckComboBox<String> cranicalNerveBox;
     private CheckComboBox<String> sensitivityDisbalanceBox;
     private CheckComboBox<String> nervousTensionBox;
+    private CheckComboBox<String> pReflexesHandBox;
+    private CheckComboBox<String> pReflexesLegBox;
 
     public RootController() {
     }
@@ -254,6 +268,38 @@ public class RootController {
             }
         });
 
+        CheckModel prhCheckModel = pReflexesHandBox.getCheckModel();
+        prhCheckModel.clearChecks();
+        if (!visit.getpReflexesHand().isEmpty()) {
+            pReflexesButton.setSelected(true);
+            visit.getpReflexesHand().forEach(s -> prhCheckModel.check(s));
+        } else if (visit.getpReflexesLeg().isEmpty()) {
+            pReflexesButton.setSelected(false);
+        }
+
+        prhCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getpReflexesHand().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getpReflexesHand().removeAll(changed.getRemoved());
+            }
+        });
+
+        CheckModel prlCheckModel = pReflexesLegBox.getCheckModel();
+        prlCheckModel.clearChecks();
+        if (!visit.getpReflexesLeg().isEmpty()) {
+            pReflexesButton.setSelected(true);
+            visit.getpReflexesLeg().forEach(s -> prlCheckModel.check(s));
+        } else if (visit.getpReflexesHand().isEmpty()) {
+            pReflexesButton.setSelected(false);
+        }
+
+        prlCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getpReflexesLeg().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getpReflexesLeg().removeAll(changed.getRemoved());
+            }
+        });
+
 
         log.info("set visit");
     }
@@ -349,6 +395,30 @@ public class RootController {
         d_e_s_D.setSelected(true);
         d_l_s_D.setUserData("D<S");
         d_m_s_D.setUserData("D>S");
+
+        pReflexesButton.setSelected(false);
+        pReflexesBox.setVisible(false);
+        pReflexesButton.setText(PropertyNames.NO);
+        pReflexesButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            log.info("pReflexesButton listener: " + newValue);
+            if (newValue) {
+                pReflexesButton.setText(PropertyNames.THESE_IS);
+                pReflexesBox.setVisible(true);
+            } else {
+                pReflexesButton.setText(PropertyNames.NO);
+                pReflexesBox.setVisible(false);
+                pReflexesLegBox.getCheckModel().clearChecks();
+                pReflexesHandBox.getCheckModel().clearChecks();
+            }
+        });
+        // pReflexesBox.
+
+        pReflexesHandBox = new CheckComboBox<>();
+        pReflexesHandPane.add(pReflexesHandBox, 0, 0);
+
+        pReflexesLegBox = new CheckComboBox<>();
+        pReflexesLegPane.add(pReflexesLegBox, 0, 0);
+
         setDefaultValue();
     }
 
@@ -494,6 +564,9 @@ public class RootController {
 
         upperLimbsBox.getItems().addAll(properties.getLimbReflexes());
         downLimbsBox.getItems().addAll(properties.getLimbReflexes());
+
+        pReflexesHandBox.getItems().addAll(properties.getpReflexesHand());
+        pReflexesLegBox.getItems().addAll(properties.getpReflexesLeg());
     }
 
     @FXML
@@ -517,6 +590,17 @@ public class RootController {
         }
     }
 
+    @FXML
+    private void handlePReflexesSelect() {
+        log.log(Level.INFO, "handlePReflexesSelect " + pReflexesButton.isSelected());
+//        if (pReflexesButton.isSelected()) {
+//            pReflexesButton.setText(PropertyNames.THESE_IS);
+//            pReflexesBox.setVisible(true);
+//        } else {
+//            pReflexesButton.setText(PropertyNames.NO);
+//            pReflexesBox.setVisible(false);
+//        }
+    }
 
 
 }

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import med.model.Properties;
@@ -44,6 +45,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Medicine");
+        this.primaryStage.getIcons().add(new Image("file:resources/nervnie_volokna.jpg"));
         loadPropertiesFromFile();
 
         initRootLayout();
@@ -227,7 +229,6 @@ public class Main extends Application {
 
             // Reading XML from the file and unmarshalling.
             Visit visit = (Visit) um.unmarshal(file);
-            System.out.println(visit.getName());
             controller.setVisit(visit);
           //  this.visit.clone(visit);
             // Save the file path to the registry.

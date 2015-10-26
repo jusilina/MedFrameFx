@@ -35,6 +35,8 @@ public class Visit implements PropertyNames {
     private StringProperty downLimbReflexes;
     private StringProperty upperDSLimb;
     private StringProperty lowerDSLimb;
+    private ObservableList<String> pReflexesHand;
+    private ObservableList<String> pReflexesLeg;
 
     public Visit() {
         initialise();
@@ -61,6 +63,8 @@ public class Visit implements PropertyNames {
         downLimbReflexes = new SimpleStringProperty();
         upperDSLimb = new SimpleStringProperty();
         lowerDSLimb = new SimpleStringProperty();
+        pReflexesHand = FXCollections.observableArrayList();
+        pReflexesLeg = FXCollections.observableArrayList();
     }
 
 
@@ -292,6 +296,22 @@ public class Visit implements PropertyNames {
 
     public void setLowerDSLimb(String lowerDSLimb) {
         this.lowerDSLimb.set(lowerDSLimb);
+    }
+
+    public ObservableList<String> getpReflexesHand() {
+        return pReflexesHand;
+    }
+
+    public void setpReflexesHand(ObservableList<String> pReflexesHand) {
+        this.pReflexesHand = pReflexesHand;
+    }
+
+    public ObservableList<String> getpReflexesLeg() {
+        return pReflexesLeg;
+    }
+
+    public void setpReflexesLeg(ObservableList<String> pReflexesLeg) {
+        this.pReflexesLeg = pReflexesLeg;
     }
 
     public void clear() {

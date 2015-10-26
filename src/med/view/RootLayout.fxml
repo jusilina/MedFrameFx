@@ -6,7 +6,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="661.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="med.view.RootController">
+<BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="678.0" prefWidth="661.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="med.view.RootController">
     <top>
         <MenuBar prefHeight="27.0" prefWidth="651.0" snapToPixel="false" BorderPane.alignment="TOP_LEFT">
             <menus>
@@ -34,180 +36,244 @@
    <center>
       <ScrollPane prefHeight="582.0" prefWidth="653.0" BorderPane.alignment="CENTER">
          <content>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="653.0" prefWidth="646.0">
-            <children>
-                  <Label layoutX="186.0" layoutY="4.0" prefHeight="21.0" prefWidth="197.0" text="Осмотр невролога (на дому)" textAlignment="CENTER" AnchorPane.topAnchor="10.0" />
-                  <VBox layoutX="26.87109375" layoutY="35.0" spacing="5.0">
-                     <children>
-                        <HBox layoutX="27.0" layoutY="35.0" spacing="10.0">
+             <HBox>
+                 <children>
+                     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                                 prefHeight="653.0" prefWidth="646.0">
+                         <children>
+                             <Label layoutX="186.0" layoutY="4.0" prefHeight="21.0" prefWidth="197.0"
+                                    text="Осмотр невролога (на дому)" textAlignment="CENTER"
+                                    AnchorPane.topAnchor="10.0"/>
+                             <VBox layoutX="26.87109375" layoutY="35.0" spacing="5.0">
                            <children>
-                              <Label layoutX="33.0" layoutY="27.0" text="Вабор категории болезни">
-                                 <HBox.margin>
+                               <HBox layoutX="27.0" layoutY="35.0" spacing="10.0">
+                                   <children>
+                                       <Label layoutX="33.0" layoutY="27.0" text="Вабор категории болезни">
+                                           <HBox.margin>
+                                               <Insets/>
+                                           </HBox.margin>
+                                       </Label>
+                                       <ChoiceBox fx:id="categoryBox" layoutX="85.0" layoutY="23.0" prefHeight="25.0"
+                                                  prefWidth="200.0"/>
+                                   </children>
+                               </HBox>
+                               <HBox layoutX="27.0" layoutY="60.0" spacing="10.0">
+                                   <children>
+                                       <Label layoutX="33.0" layoutY="49.0" prefHeight="24.0" prefWidth="36.0"
+                                              text="Дата">
+                                           <HBox.margin>
+                                               <Insets/>
+                                           </HBox.margin>
+                                       </Label>
+                                       <DatePicker fx:id="date" layoutX="70.0" layoutY="45.0"/>
+                                   </children>
+                               </HBox>
+                               <HBox layoutX="27.0" layoutY="85.0" spacing="10.0">
+                                   <children>
+                                       <Label layoutX="33.0" layoutY="80.0" prefHeight="25.0" prefWidth="37.0"
+                                              text="ФИО"/>
+                                       <TextField fx:id="name" layoutX="64.0" layoutY="76.0" prefHeight="25.0"
+                                                  prefWidth="174.0"/>
+                                   </children>
+                                   <opaqueInsets>
                                     <Insets />
-                                 </HBox.margin>
-                              </Label>
-                              <ChoiceBox fx:id="categoryBox" layoutX="85.0" layoutY="23.0" prefHeight="25.0" prefWidth="200.0" />
-                           </children>
-                        </HBox>
-                        <HBox layoutX="27.0" layoutY="60.0" spacing="10.0">
-                           <children>
-                              <Label layoutX="33.0" layoutY="49.0" prefHeight="24.0" prefWidth="36.0" text="Дата">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
-                              <DatePicker fx:id="date" layoutX="70.0" layoutY="45.0" />
-                           </children>
-                        </HBox>
-                        <HBox layoutX="27.0" layoutY="85.0" spacing="10.0">
-                           <children>
-                              <Label layoutX="33.0" layoutY="80.0" prefHeight="25.0" prefWidth="37.0" text="ФИО" />
-                              <TextField fx:id="name" layoutX="64.0" layoutY="76.0" prefHeight="25.0" prefWidth="174.0" />
-                           </children>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </HBox>
-                        <HBox layoutX="27.0" layoutY="110.0" spacing="10.0">
-                           <children>
-                              <Label layoutX="33.0" layoutY="108.0" text="Жалобы">
-                                 <HBox.margin>
-                                    <Insets right="10.0" />
-                                 </HBox.margin>
-                              </Label>
-                              <GridPane fx:id="complaintPain" layoutX="297.0" layoutY="96.0" prefHeight="25.0" prefWidth="139.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                              </GridPane>
-                              <TextArea fx:id="complaint" prefHeight="39.0" prefWidth="349.0" />
-                           </children>
-                        </HBox>
-                        <HBox spacing="10.0">
-                           <children>
-                              <Label layoutX="27.0" layoutY="191.0" text="Соц. анамнез" />
-                              <ComboBox fx:id="jobComboBox" layoutX="114.0" layoutY="187.0" prefWidth="150.0" />
-                              <Group fx:id="professionGroup">
+                                   </opaqueInsets>
+                               </HBox>
+                               <HBox layoutX="27.0" layoutY="110.0" spacing="10.0">
                                  <children>
-                                    <TextField fx:id="professionField" layoutX="274.0" layoutY="187.0" />
-                                    <ComboBox fx:id="stressComboBox" layoutX="434.0" layoutY="187.0" prefWidth="150.0" />
+                                     <Label layoutX="33.0" layoutY="108.0" text="Жалобы">
+                                         <HBox.margin>
+                                             <Insets right="10.0"/>
+                                         </HBox.margin>
+                                     </Label>
+                                     <GridPane fx:id="complaintPain" layoutX="297.0" layoutY="96.0" prefHeight="25.0"
+                                               prefWidth="139.0">
+                                         <columnConstraints>
+                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                         </columnConstraints>
+                                         <rowConstraints>
+                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                         </rowConstraints>
+                                     </GridPane>
+                                     <TextArea fx:id="complaint" prefHeight="39.0" prefWidth="349.0"/>
                                  </children>
-                              </Group>
-                           </children>
-                        </HBox>
-                        <HBox spacing="10.0">
-                           <children>
-                              <Label layoutX="27.0" layoutY="230.0" text="Анамнез" />
-                              <TextArea fx:id="anamnesisArea" layoutX="88.0" layoutY="219.0" prefHeight="40.0" prefWidth="536.0" />
-                           </children>
-                        </HBox>
-                        <HBox spacing="10.0">
-                           <children>
-                              <Label layoutX="27.0" layoutY="270.0" text="Сознание" />
-                              <ComboBox fx:id="consciousBox" layoutX="88.0" layoutY="266.0" prefHeight="25.0" prefWidth="130.0" />
-                              <TextField fx:id="consciousText" layoutX="225.0" layoutY="267.0" />
-                              <Label layoutX="392.0" layoutY="262.0" text="Эпиприступы" />
-                              <TextField fx:id="epiText" layoutX="466.0" layoutY="258.0" />
-                           </children>
-                        </HBox>
-                        <HBox spacing="10.0">
-                           <children>
-                              <Label layoutX="34.0" layoutY="310.0" text="Эмоциональная сфера" />
-                              <ComboBox fx:id="emotionMainBox" layoutX="165.0" layoutY="306.0" prefWidth="150.0" />
-                              <GridPane fx:id="emotionPain" layoutX="324.0" layoutY="307.0" prefHeight="23.0" prefWidth="200.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                              </GridPane>
-                           </children>
-                        </HBox>
-                        <HBox spacing="10.0">
-                           <children>
-                              <Label layoutX="20.0" layoutY="343.0" text="Сон" />
-                              <ComboBox fx:id="dreamComboBox" layoutX="51.0" layoutY="339.0" prefWidth="150.0" />
-                              <GridPane fx:id="dreamPain" layoutX="215.0" layoutY="343.0" prefHeight="25.0" prefWidth="148.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                              </GridPane>
-                           </children>
-                        </HBox>
-                        <HBox spacing="10.0">
-                           <children>
-                              <Label layoutX="27.0" layoutY="342.0" text="ЧМН" />
-                              <GridPane fx:id="cranicalNervePain" layoutX="75.0" layoutY="343.0" prefHeight="25.0" prefWidth="200.0">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                              </GridPane>
-                           </children>
-                        </HBox>
-                        <HBox spacing="10.0">
-                           <children>
-                              <Label layoutX="27.0" layoutY="370.0" text="Чувствительность" />
-                              <ComboBox fx:id="sensitivityMainBox" layoutX="143.0" layoutY="366.0" prefWidth="150.0" />
-                              <GridPane fx:id="sensitivityPain" layoutX="315.0" layoutY="371.0" prefHeight="25.0" prefWidth="150.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                              </GridPane>
-                           </children>
-                        </HBox>
-                        <HBox spacing="10.0">
-                           <children>
-                              <Label layoutX="27.0" layoutY="400.0" text="болевые симптомы натяжения нервных стволов:" />
-                              <ComboBox fx:id="nervousTensionMainBox" layoutX="308.0" layoutY="396.0" prefWidth="150.0" />
-                              <GridPane fx:id="nervousTensionPain" layoutX="447.0" layoutY="396.0" prefHeight="25.0" prefWidth="150.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                              </GridPane>
-                           </children>
-                        </HBox>
-                        <HBox spacing="10.0">
-                           <children>
-                              <Label layoutX="27.0" layoutY="428.0" text="Рефлексы с верхних конечностей" />
-                              <ComboBox fx:id="upperLimbsBox" layoutX="218.0" layoutY="433.0" prefHeight="25.0" prefWidth="107.0" />
-                              <VBox spacing="5.0">
+                               </HBox>
+                               <HBox spacing="10.0">
                                  <children>
-                                    <RadioButton fx:id="d_e_s_U" layoutX="340.0" layoutY="428.0" mnemonicParsing="false" text="D = S" />
-                                    <RadioButton fx:id="d_m_s_U" layoutX="340.0" layoutY="474.0" mnemonicParsing="false" text="D &gt; S" />
-                                    <RadioButton fx:id="d_l_s_U" layoutX="340.0" layoutY="450.0" mnemonicParsing="false" text="D &lt; S" />
+                                     <Label layoutX="27.0" layoutY="191.0" text="Соц. анамнез"/>
+                                     <ComboBox fx:id="jobComboBox" layoutX="114.0" layoutY="187.0" prefWidth="150.0"/>
+                                     <Group fx:id="professionGroup">
+                                         <children>
+                                             <TextField fx:id="professionField" layoutX="274.0" layoutY="187.0"/>
+                                             <ComboBox fx:id="stressComboBox" layoutX="434.0" layoutY="187.0"
+                                                       prefWidth="150.0"/>
+                                         </children>
+                                     </Group>
                                  </children>
-                              </VBox>
-                              <Label layoutX="400.0" layoutY="437.0" text="нижних" />
-                              <ComboBox fx:id="downLimbsBox" layoutX="453.0" layoutY="433.0" prefHeight="25.0" prefWidth="107.0" />
-                              <VBox spacing="5.0">
+                               </HBox>
+                               <HBox spacing="10.0">
                                  <children>
-                                    <RadioButton fx:id="d_e_s_D" mnemonicParsing="false" text="D = S" />
-                                    <RadioButton fx:id="d_m_s_D" mnemonicParsing="false" text="D &gt; S" />
-                                    <RadioButton fx:id="d_l_s_D" mnemonicParsing="false" text="D &lt; S" />
+                                     <Label layoutX="27.0" layoutY="230.0" text="Анамнез"/>
+                                     <TextArea fx:id="anamnesisArea" layoutX="88.0" layoutY="219.0" prefHeight="40.0"
+                                               prefWidth="536.0"/>
                                  </children>
-                              </VBox>
+                               </HBox>
+                               <HBox spacing="10.0">
+                                   <children>
+                                       <Label layoutX="27.0" layoutY="270.0" text="Сознание"/>
+                                       <ComboBox fx:id="consciousBox" layoutX="88.0" layoutY="266.0" prefHeight="25.0"
+                                                 prefWidth="130.0"/>
+                                       <TextField fx:id="consciousText" layoutX="225.0" layoutY="267.0"/>
+                                       <Label layoutX="392.0" layoutY="262.0" text="Эпиприступы"/>
+                                       <TextField fx:id="epiText" layoutX="466.0" layoutY="258.0"/>
+                                   </children>
+                               </HBox>
+                               <HBox spacing="10.0">
+                                   <children>
+                                       <Label layoutX="34.0" layoutY="310.0" text="Эмоциональная сфера"/>
+                                       <ComboBox fx:id="emotionMainBox" layoutX="165.0" layoutY="306.0"
+                                                 prefWidth="150.0"/>
+                                       <GridPane fx:id="emotionPain" layoutX="324.0" layoutY="307.0" prefHeight="23.0"
+                                                 prefWidth="200.0">
+                                           <columnConstraints>
+                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                           </columnConstraints>
+                                           <rowConstraints>
+                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                           </rowConstraints>
+                                       </GridPane>
+                                   </children>
+                               </HBox>
+                               <HBox spacing="10.0">
+                                   <children>
+                                       <Label layoutX="20.0" layoutY="343.0" text="Сон"/>
+                                       <ComboBox fx:id="dreamComboBox" layoutX="51.0" layoutY="339.0"
+                                                 prefWidth="150.0"/>
+                                       <GridPane fx:id="dreamPain" layoutX="215.0" layoutY="343.0" prefHeight="25.0"
+                                                 prefWidth="148.0">
+                                           <columnConstraints>
+                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                           </columnConstraints>
+                                           <rowConstraints>
+                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                           </rowConstraints>
+                                       </GridPane>
+                                   </children>
+                               </HBox>
+                               <HBox spacing="10.0">
+                                   <children>
+                                       <Label layoutX="27.0" layoutY="342.0" text="ЧМН"/>
+                                       <GridPane fx:id="cranicalNervePain" layoutX="75.0" layoutY="343.0"
+                                                 prefHeight="25.0" prefWidth="200.0">
+                                           <columnConstraints>
+                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                           </columnConstraints>
+                                           <rowConstraints>
+                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                           </rowConstraints>
+                                       </GridPane>
+                                   </children>
+                               </HBox>
+                               <HBox spacing="10.0">
+                                   <children>
+                                       <Label layoutX="27.0" layoutY="370.0" text="Чувствительность"/>
+                                       <ComboBox fx:id="sensitivityMainBox" layoutX="143.0" layoutY="366.0"
+                                                 prefWidth="150.0"/>
+                                       <GridPane fx:id="sensitivityPain" layoutX="315.0" layoutY="371.0"
+                                                 prefHeight="25.0" prefWidth="150.0">
+                                           <columnConstraints>
+                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                           </columnConstraints>
+                                           <rowConstraints>
+                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                           </rowConstraints>
+                                       </GridPane>
+                                   </children>
+                               </HBox>
+                               <HBox spacing="10.0">
+                                   <children>
+                                       <Label layoutX="27.0" layoutY="400.0"
+                                              text="болевые симптомы натяжения нервных стволов:"/>
+                                       <ComboBox fx:id="nervousTensionMainBox" layoutX="308.0" layoutY="396.0"
+                                                 prefWidth="150.0"/>
+                                       <GridPane fx:id="nervousTensionPain" layoutX="447.0" layoutY="396.0"
+                                                 prefHeight="25.0" prefWidth="150.0">
+                                           <columnConstraints>
+                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                           </columnConstraints>
+                                           <rowConstraints>
+                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                           </rowConstraints>
+                                       </GridPane>
+                                   </children>
+                               </HBox>
+                               <HBox spacing="10.0">
+                                   <children>
+                                       <Label layoutX="27.0" layoutY="428.0" text="Рефлексы с верхних конечностей"/>
+                                       <ComboBox fx:id="upperLimbsBox" layoutX="218.0" layoutY="433.0" prefHeight="25.0"
+                                                 prefWidth="107.0"/>
+                                       <VBox spacing="5.0">
+                                           <children>
+                                               <RadioButton fx:id="d_e_s_U" layoutX="340.0" layoutY="428.0"
+                                                            mnemonicParsing="false" text="D = S"/>
+                                               <RadioButton fx:id="d_m_s_U" layoutX="340.0" layoutY="474.0"
+                                                            mnemonicParsing="false" text="D &gt; S"/>
+                                               <RadioButton fx:id="d_l_s_U" layoutX="340.0" layoutY="450.0"
+                                                            mnemonicParsing="false" text="D &lt; S"/>
+                                           </children>
+                                       </VBox>
+                                       <Label layoutX="400.0" layoutY="437.0" text="нижних"/>
+                                       <ComboBox fx:id="downLimbsBox" layoutX="453.0" layoutY="433.0" prefHeight="25.0"
+                                                 prefWidth="107.0"/>
+                                       <VBox spacing="5.0">
+                                           <children>
+                                               <RadioButton fx:id="d_e_s_D" mnemonicParsing="false" text="D = S"/>
+                                               <RadioButton fx:id="d_m_s_D" mnemonicParsing="false" text="D &gt; S"/>
+                                               <RadioButton fx:id="d_l_s_D" mnemonicParsing="false" text="D &lt; S"/>
+                                           </children>
+                                       </VBox>
+                                   </children>
+                               </HBox>
+                               <HBox spacing="10.0">
+                                   <children>
+                                       <Label layoutX="27.0" layoutY="502.0" text="Патологические рефлексы"/>
+                                       <ToggleButton fx:id="pReflexesButton" layoutX="186.0" layoutY="498.0"
+                                                     mnemonicParsing="false" onAction="#handlePReflexesSelect"
+                                                     text="ToggleButton"/>
+                                       <HBox fx:id="pReflexesBox" layoutX="285.0" layoutY="502.0" spacing="10.0">
+                                           <children>
+                                               <Label layoutX="285.0" layoutY="502.0" text="с рук"/>
+                                               <GridPane fx:id="pReflexesHandPane" layoutX="344.0" layoutY="508.0">
+                                                   <columnConstraints>
+                                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0"
+                                                                          minWidth="0.0" prefWidth="79.0"/>
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                       <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                       vgrow="SOMETIMES"/>
+                                                   </rowConstraints>
+                                               </GridPane>
+                                               <Label layoutX="431.0" layoutY="511.0" text="с ног"/>
+                                               <GridPane fx:id="pReflexesLegPane" layoutX="478.0" layoutY="504.0">
+                                                   <columnConstraints>
+                                                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0"
+                                                                          minWidth="0.0" prefWidth="79.0"/>
+                                                   </columnConstraints>
+                                                   <rowConstraints>
+                                                       <RowConstraints minHeight="10.0" prefHeight="30.0"
+                                                                       vgrow="SOMETIMES"/>
+                                                   </rowConstraints>
+                                               </GridPane>
+                                           </children>
+                                       </HBox>
+                                   </children>
+                               </HBox>
                            </children>
-                        </HBox>
+                             </VBox>
                      </children>
-                  </VBox>
+                     </AnchorPane>
                </children>
-            </AnchorPane>
+             </HBox>
          </content>
       </ScrollPane>
    </center>
