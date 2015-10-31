@@ -37,6 +37,12 @@ public class Visit implements PropertyNames {
     private StringProperty lowerDSLimb;
     private ObservableList<String> pReflexesHand;
     private ObservableList<String> pReflexesLeg;
+    private ObservableList<String> aReflexes;
+    private StringProperty diagnosis;
+    private StringProperty gait;
+    private ObservableList<String> motion;
+    private StringProperty motionType;
+    private ObservableList<String> muscle;
 
     public Visit() {
         initialise();
@@ -65,6 +71,13 @@ public class Visit implements PropertyNames {
         lowerDSLimb = new SimpleStringProperty();
         pReflexesHand = FXCollections.observableArrayList();
         pReflexesLeg = FXCollections.observableArrayList();
+        aReflexes = FXCollections.observableArrayList();
+        diagnosis = new SimpleStringProperty();
+        category = new SimpleStringProperty();
+        gait = new SimpleStringProperty(N);
+        motion = FXCollections.observableArrayList();
+        muscle = FXCollections.observableArrayList();
+        motionType = new SimpleStringProperty();
     }
 
 
@@ -312,6 +325,66 @@ public class Visit implements PropertyNames {
 
     public void setpReflexesLeg(ObservableList<String> pReflexesLeg) {
         this.pReflexesLeg = pReflexesLeg;
+    }
+
+    public ObservableList<String> getaReflexes() {
+        return aReflexes;
+    }
+
+    public void setaReflexes(ObservableList<String> aReflexes) {
+        this.aReflexes = aReflexes;
+    }
+
+    public String getDiagnosis() {
+        return diagnosis.get();
+    }
+
+    public StringProperty diagnosisProperty() {
+        return diagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis.set(diagnosis);
+    }
+
+    public String getGait() {
+        return gait.get();
+    }
+
+    public StringProperty gaitProperty() {
+        return gait;
+    }
+
+    public void setGait(String gait) {
+        this.gait.set(gait);
+    }
+
+    public ObservableList<String> getMotion() {
+        return motion;
+    }
+
+    public void setMotion(ObservableList<String> motion) {
+        this.motion = motion;
+    }
+
+    public String getMotionType() {
+        return motionType.get();
+    }
+
+    public StringProperty motionTypeProperty() {
+        return motionType;
+    }
+
+    public void setMotionType(String motionType) {
+        this.motionType.set(motionType);
+    }
+
+    public ObservableList<String> getMuscle() {
+        return muscle;
+    }
+
+    public void setMuscle(ObservableList<String> muscle) {
+        this.muscle = muscle;
     }
 
     public void clear() {

@@ -7,10 +7,12 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Box;
 import javafx.stage.FileChooser;
 import med.Main;
@@ -31,7 +33,6 @@ import java.util.logging.Logger;
 
 public class RootController {
     private static Logger log = Logger.getLogger(RootController.class.getName());
-
     // Reference to the main application
     private Main mainApp;
     private Properties properties;
@@ -106,6 +107,70 @@ public class RootController {
     private GridPane pReflexesLegPane;
     @FXML
     private GridPane pReflexesHandPane;
+    @FXML
+    private TextArea diagnosisTextArea;
+    @FXML
+    private GridPane aReflexesPane;
+    @FXML
+    private ComboBox gaitBox;
+    @FXML
+    private RadioButton motionTypeActiveRadioButton;
+    @FXML
+    private RadioButton motionTypePassiveRadioButton;
+    @FXML
+    private GridPane motionPane;
+    @FXML
+    private GridPane musclePane;
+    @FXML
+    private RadioButton s_l_n_coord;
+    @FXML
+    private RadioButton s_m_n_coord;
+    @FXML
+    private RadioButton s_e_n_coord;
+    @FXML
+    private RadioButton d_l_s_coord;
+    @FXML
+    private RadioButton d_m_s_coord;
+    @FXML
+    private RadioButton d_e_s_coord;
+    @FXML
+    private ToggleButton coordinationButton;
+    @FXML
+    private GridPane coordinationPane;
+    @FXML
+    private VBox coordinationVBox;
+    @FXML
+    private GridPane rombergPane;
+    @FXML
+    private GridPane nervousSystemPane;
+    @FXML
+    private GridPane pelvicOrganPane;
+    @FXML
+    private TextField pelvicOrganField;
+    @FXML
+    private GridPane recommendationPane;
+    @FXML
+    private TextArea recommendationArea;
+    @FXML
+    private GridPane therapyPane;
+    @FXML
+    private ListView therapyListView;
+    @FXML
+    private Button addDrugButton;
+    @FXML
+    private ToggleButton workCapacityButton;
+    @FXML
+    private DatePicker workCapacityToDatePicker;
+    @FXML
+    private DatePicker workCapacityFromDatePicker;
+    @FXML
+    private DatePicker appearanceDatePicker;
+    @FXML
+    private HBox workCapacityHBox;
+
+
+
+
 
 
     private CheckComboBox<String> complaintCheckComboBox;
@@ -116,6 +181,15 @@ public class RootController {
     private CheckComboBox<String> nervousTensionBox;
     private CheckComboBox<String> pReflexesHandBox;
     private CheckComboBox<String> pReflexesLegBox;
+    private CheckComboBox<String> aReflexesBox;
+    private CheckComboBox<String> motionBox;
+    private CheckComboBox<String> muscleBox;
+    private CheckComboBox<String> rombergBox;
+    private CheckComboBox<String> coordinationTestBox;
+    private CheckComboBox<String> nervousSystemBox;
+    private CheckComboBox<String> pelvicOrganBox;
+    private CheckComboBox<String> recommendationBox;
+    private CheckComboBox<String> therapyBox;
 
     public RootController() {
     }
@@ -137,6 +211,7 @@ public class RootController {
         Bindings.bindBidirectional(consciousBox.valueProperty(), visit.consciousProperty());
 
         Bindings.bindBidirectional(categoryBox.valueProperty(), visit.categoryProperty());
+        Bindings.bindBidirectional(diagnosisTextArea.textProperty(), visit.diagnosisProperty());
 
         /**
          * Select items in complaint list. Add listener to populate visit.complaintList with selected items
@@ -300,6 +375,61 @@ public class RootController {
             }
         });
 
+        CheckModel aCheckModel = aReflexesBox.getCheckModel();
+        aCheckModel.clearChecks();
+        if (!visit.getaReflexes().isEmpty()) {
+            visit.getaReflexes().forEach(s -> aCheckModel.check(s));
+        }
+
+        aCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getaReflexes().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getaReflexes().removeAll(changed.getRemoved());
+            }
+        });
+
+        Bindings.bindBidirectional(gaitBox.valueProperty(), visit.gaitProperty());
+
+        ToggleGroup motionTypeGroup = new ToggleGroup();
+        motionTypeGroup.getToggles().addAll(motionTypeActiveRadioButton, motionTypePassiveRadioButton);
+
+        motionTypeGroup.selectedToggleProperty().addListener(observable -> {
+                    if (null != motionTypeGroup.getSelectedToggle())
+                        visit.setMotionType(motionTypeGroup.getSelectedToggle().getUserData().toString());
+                }
+        );
+        String motionTypeString = visit.getMotionType();
+        motionTypeGroup.getToggles().forEach(toggle -> {
+            if (toggle.getUserData().equals(motionTypeString)) {
+                motionTypeGroup.selectToggle(toggle);
+            }
+        });
+
+        CheckModel moCheckModel = motionBox.getCheckModel();
+        moCheckModel.clearChecks();
+        if (!visit.getMotion().isEmpty()) {
+            visit.getMotion().forEach(s -> moCheckModel.check(s));
+        }
+
+        moCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getMotion().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getMotion().removeAll(changed.getRemoved());
+            }
+        });
+
+        CheckModel muCheckModel = muscleBox.getCheckModel();
+        muCheckModel.clearChecks();
+        if (!visit.getMuscle().isEmpty()) {
+            visit.getMuscle().forEach(s -> muCheckModel.check(s));
+        }
+
+        muCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getMuscle().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getMuscle().removeAll(changed.getRemoved());
+            }
+        });
 
         log.info("set visit");
     }
@@ -419,6 +549,27 @@ public class RootController {
         pReflexesLegBox = new CheckComboBox<>();
         pReflexesLegPane.add(pReflexesLegBox, 0, 0);
 
+        aReflexesBox = new CheckComboBox<>();
+        aReflexesPane.add(aReflexesBox, 0, 0);
+
+
+        categoryBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            properties.getCategories().forEach(category -> {
+                if (category.getName().equals(newValue)) {
+                    diagnosisTextArea.setText(category.getDiagnosis());
+                }
+            });
+        });
+
+        motionBox = new CheckComboBox<>();
+        motionPane.add(motionBox, 0, 0);
+        muscleBox = new CheckComboBox<>();
+        musclePane.add(muscleBox, 0, 0);
+
+        gaitBox.getItems().addAll(PropertyNames.N, PropertyNames.ANTALGIC);
+        motionTypeActiveRadioButton.setUserData(PropertyNames.ACTIVE);
+        motionTypePassiveRadioButton.setUserData(PropertyNames.PASSIVE);
+
         setDefaultValue();
     }
 
@@ -452,6 +603,7 @@ public class RootController {
     @FXML
     private void handleNew() {
         mainApp.getVisit().clear();
+        setDefaultValue();
         mainApp.setVisitFilePath(null);
     }
 
@@ -567,6 +719,11 @@ public class RootController {
 
         pReflexesHandBox.getItems().addAll(properties.getpReflexesHand());
         pReflexesLegBox.getItems().addAll(properties.getpReflexesLeg());
+
+        aReflexesBox.getItems().addAll(properties.getaReflexes());
+
+        motionBox.getItems().addAll(properties.getMotions());
+        muscleBox.getItems().addAll(properties.getMuscleTones());
     }
 
     @FXML
@@ -589,19 +746,6 @@ public class RootController {
             }
         }
     }
-
-    @FXML
-    private void handlePReflexesSelect() {
-        log.log(Level.INFO, "handlePReflexesSelect " + pReflexesButton.isSelected());
-//        if (pReflexesButton.isSelected()) {
-//            pReflexesButton.setText(PropertyNames.THESE_IS);
-//            pReflexesBox.setVisible(true);
-//        } else {
-//            pReflexesButton.setText(PropertyNames.NO);
-//            pReflexesBox.setVisible(false);
-//        }
-    }
-
 
 }
 

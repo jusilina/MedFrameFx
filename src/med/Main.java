@@ -23,11 +23,9 @@ import java.util.prefs.Preferences;
 public class Main extends Application {
     Logger logger = Logger.getLogger(Main.class.getName());
     private Stage primaryStage;
-//    private BorderPane rootLayout;
+    //    private BorderPane rootLayout;
     private Properties properties;
-    private  RootController controller;
-
-
+    private RootController controller;
 
 
     private Visit visit = new Visit();
@@ -42,7 +40,7 @@ public class Main extends Application {
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Medicine");
         this.primaryStage.getIcons().add(new Image("file:resources/nervnie_volokna.jpg"));
@@ -50,10 +48,7 @@ public class Main extends Application {
 
         initRootLayout();
 
-    //    showVisitLayout();
-
-
-
+        //    showVisitLayout();
 
 
 //            try {
@@ -76,8 +71,8 @@ public class Main extends Application {
 //            }
 
 
-
     }
+
     /**
      * Shows the visit overview inside the root layout.
      */
@@ -102,7 +97,6 @@ public class Main extends Application {
 //
 //
 //    }
-
     private void initRootLayout() {
 
         try {
@@ -134,8 +128,6 @@ public class Main extends Application {
 //        }
 
     }
-
-
 
 
     /**
@@ -177,15 +169,14 @@ public class Main extends Application {
     }
 
 
-
     /**
      * Returns the main stage.
+     *
      * @return
      */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
-
 
 
     public static void main(String[] args) {
@@ -214,7 +205,7 @@ public class Main extends Application {
             logger.log(Level.ALL, e.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
-                       alert.setContentText("Could not save data to file:\n" + file.getPath());
+            alert.setContentText("Could not save data to file:\n" + file.getPath());
             alert.showAndWait();
 
         }
@@ -230,7 +221,7 @@ public class Main extends Application {
             // Reading XML from the file and unmarshalling.
             Visit visit = (Visit) um.unmarshal(file);
             controller.setVisit(visit);
-          //  this.visit.clone(visit);
+            //  this.visit.clone(visit);
             // Save the file path to the registry.
             setVisitFilePath(file);
 
@@ -243,18 +234,15 @@ public class Main extends Application {
         }
     }
 
-    private void loadPropertiesFromFile()
-    {
+    private void loadPropertiesFromFile() {
         try {
             JAXBContext context = JAXBContext
                     .newInstance(Properties.class);
             Unmarshaller um = context.createUnmarshaller();
             properties = (Properties) um.unmarshal(new File("properties.xml"));
             System.out.println(properties.toString());
-        }
-        catch (Exception e)
-        {
-                  e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
