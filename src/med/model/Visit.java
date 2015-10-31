@@ -43,6 +43,10 @@ public class Visit implements PropertyNames {
     private ObservableList<String> motion;
     private StringProperty motionType;
     private ObservableList<String> muscle;
+    private StringProperty dsCoordination;
+    private StringProperty snCoordination;
+    private ObservableList<String> coordinationTest;
+    private ObservableList<String> romberg;
 
     public Visit() {
         initialise();
@@ -78,6 +82,10 @@ public class Visit implements PropertyNames {
         motion = FXCollections.observableArrayList();
         muscle = FXCollections.observableArrayList();
         motionType = new SimpleStringProperty();
+        dsCoordination = new SimpleStringProperty();
+        snCoordination = new SimpleStringProperty();
+        coordinationTest = FXCollections.observableArrayList();
+        romberg = FXCollections.observableArrayList();
     }
 
 
@@ -385,6 +393,46 @@ public class Visit implements PropertyNames {
 
     public void setMuscle(ObservableList<String> muscle) {
         this.muscle = muscle;
+    }
+
+    public String getDsCoordination() {
+        return dsCoordination.get();
+    }
+
+    public StringProperty dsCoordinationProperty() {
+        return dsCoordination;
+    }
+
+    public void setDsCoordination(String dsCoordination) {
+        this.dsCoordination.set(dsCoordination);
+    }
+
+    public String getSnCoordination() {
+        return snCoordination.get();
+    }
+
+    public StringProperty snCoordinationProperty() {
+        return snCoordination;
+    }
+
+    public void setSnCoordination(String snCoordination) {
+        this.snCoordination.set(snCoordination);
+    }
+
+    public ObservableList<String> getCoordinationTest() {
+        return coordinationTest;
+    }
+
+    public void setCoordinationTest(ObservableList<String> coordinationTest) {
+        this.coordinationTest = coordinationTest;
+    }
+
+    public ObservableList<String> getRomberg() {
+        return romberg;
+    }
+
+    public void setRomberg(ObservableList<String> romberg) {
+        this.romberg = romberg;
     }
 
     public void clear() {

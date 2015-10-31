@@ -19,6 +19,8 @@ public class Properties {
     private List<String> aReflexes;
     private List<String> muscleTones;
     private List<String> motions;
+    private List<String> romberg;
+    private List<String> coordinationTest;
 
     @XmlElement(name = "category")
     public List<Category> getCategories() {
@@ -135,5 +137,23 @@ public class Properties {
 
     public void setMotions(List<String> motions) {
         this.motions = motions;
+    }
+
+    @XmlElement(name = "rombergManeuver")
+    public List<String> getRomberg() {
+        return romberg;
+    }
+
+    public void setRomberg(List<String> romberg) {
+        this.romberg = romberg;
+    }
+
+    @XmlElement(name = "coordinationTest")
+    public List<String> getCoordinationTest() {
+        return coordinationTest;
+    }
+
+    public void setCoordinationTest(List<String> coordinationTest) {
+        this.coordinationTest = coordinationTest;
     }
 }

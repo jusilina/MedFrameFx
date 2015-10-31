@@ -431,6 +431,71 @@ public class RootController {
             }
         });
 
+
+        ToggleGroup dsCoordinationGroup = new ToggleGroup();
+        ToggleGroup snCoordinationGroup = new ToggleGroup();
+
+        dsCoordinationGroup.getToggles().addAll(d_e_s_coord, d_l_s_coord, d_m_s_coord);
+        snCoordinationGroup.getToggles().addAll(s_e_n_coord, s_l_n_coord, s_m_n_coord);
+
+        dsCoordinationGroup.selectedToggleProperty().addListener(observable -> {
+                    if (null != dsCoordinationGroup.getSelectedToggle())
+                        visit.setDsCoordination(dsCoordinationGroup.getSelectedToggle().getUserData().toString());
+                }
+        );
+
+        snCoordinationGroup.selectedToggleProperty().addListener(observable -> {
+                    if (null != snCoordinationGroup.getSelectedToggle())
+                        visit.setSnCoordination(snCoordinationGroup.getSelectedToggle().getUserData().toString());
+                }
+        );
+
+        String dsCoord = visit.getDsCoordination();
+        dsCoordinationGroup.getToggles().forEach(toggle -> {
+            if (toggle.getUserData().equals(dsCoord)) {
+                dsCoordinationGroup.selectToggle(toggle);
+            }
+        });
+
+        String snCoord = visit.getSnCoordination();
+        snCoordinationGroup.getToggles().forEach(toggle -> {
+            if (toggle.getUserData().equals(snCoord)) {
+                snCoordinationGroup.selectToggle(toggle);
+            }
+        });
+
+        CheckModel roCheckModel = rombergBox.getCheckModel();
+        roCheckModel.clearChecks();
+        if (!visit.getRomberg().isEmpty()) {
+            coordinationButton.setSelected(true);
+            visit.getRomberg().forEach(s -> roCheckModel.check(s));
+        } else if (visit.getCoordinationTest().isEmpty()) {
+            coordinationButton.setSelected(false);
+        }
+
+        roCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getRomberg().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getRomberg().removeAll(changed.getRemoved());
+            }
+        });
+
+        CheckModel coCheckModel = coordinationTestBox.getCheckModel();
+        coCheckModel.clearChecks();
+        if (!visit.getCoordinationTest().isEmpty()) {
+            coordinationButton.setSelected(true);
+            visit.getCoordinationTest().forEach(s -> coCheckModel.check(s));
+        } else if (visit.getRomberg().isEmpty()) {
+            coordinationButton.setSelected(false);
+        }
+
+        coCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getCoordinationTest().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getCoordinationTest().removeAll(changed.getRemoved());
+            }
+        });
+
         log.info("set visit");
     }
 
@@ -569,6 +634,37 @@ public class RootController {
         gaitBox.getItems().addAll(PropertyNames.N, PropertyNames.ANTALGIC);
         motionTypeActiveRadioButton.setUserData(PropertyNames.ACTIVE);
         motionTypePassiveRadioButton.setUserData(PropertyNames.PASSIVE);
+
+        rombergBox = new CheckComboBox<>();
+        rombergPane.add(rombergBox, 0, 0);
+        coordinationTestBox = new CheckComboBox<>();
+        coordinationPane.add(coordinationTestBox, 0, 0);
+
+        coordinationButton.setSelected(false);
+        coordinationVBox.setVisible(false);
+        coordinationVBox.setManaged(false);
+        coordinationButton.setText(PropertyNames.NORM);
+        coordinationButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            log.info("coordinationButton listener: " + newValue);
+            if (newValue) {
+                coordinationButton.setText(PropertyNames.DISTURBED);
+                coordinationVBox.setVisible(true);
+                coordinationVBox.setManaged(true);
+            } else {
+                coordinationButton.setText(PropertyNames.NORM);
+                coordinationVBox.setVisible(false);
+                coordinationVBox.setManaged(false);
+                rombergBox.getCheckModel().clearChecks();
+                coordinationTestBox.getCheckModel().clearChecks();
+            }
+        });
+
+        s_e_n_coord.setUserData("S=N");
+        s_l_n_coord.setUserData("S<N");
+        s_m_n_coord.setUserData("S>N");
+        d_e_s_coord.setUserData("D=S");
+        d_l_s_coord.setUserData("D<S");
+        d_m_s_coord.setUserData("D>S");
 
         setDefaultValue();
     }
@@ -724,6 +820,9 @@ public class RootController {
 
         motionBox.getItems().addAll(properties.getMotions());
         muscleBox.getItems().addAll(properties.getMuscleTones());
+
+        rombergBox.getItems().addAll(properties.getRomberg());
+        coordinationTestBox.getItems().addAll(properties.getCoordinationTest());
     }
 
     @FXML
