@@ -169,10 +169,6 @@ public class RootController {
     private HBox workCapacityHBox;
 
 
-
-
-
-
     private CheckComboBox<String> complaintCheckComboBox;
     private CheckComboBox<String> emotionCheckComboBox;
     private CheckComboBox<String> dreamCheckComboBox;
@@ -496,6 +492,61 @@ public class RootController {
             }
         });
 
+        CheckModel nerSysCheckModel = nervousSystemBox.getCheckModel();
+        nerSysCheckModel.clearChecks();
+        if (!visit.getNervousSystem().isEmpty()) {
+            visit.getNervousSystem().forEach(s -> nerSysCheckModel.check(s));
+        }
+
+        nerSysCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getNervousSystem().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getNervousSystem().removeAll(changed.getRemoved());
+            }
+        });
+
+        CheckModel peCheckModel = pelvicOrganBox.getCheckModel();
+        peCheckModel.clearChecks();
+        if (!visit.getPelvicOrganList().isEmpty()) {
+            visit.getPelvicOrganList().forEach(s -> peCheckModel.check(s));
+        }
+
+        peCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getPelvicOrganList().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getPelvicOrganList().removeAll(changed.getRemoved());
+            }
+        });
+
+        Bindings.bindBidirectional(pelvicOrganField.textProperty(), visit.pelvicOrganProperty());
+        Bindings.bindBidirectional(recommendationArea.textProperty(), visit.recommendationsAddProperty());
+
+        CheckModel reCheckModel = recommendationBox.getCheckModel();
+        reCheckModel.clearChecks();
+        if (!visit.getRecommendations().isEmpty()) {
+            visit.getRecommendations().forEach(s -> reCheckModel.check(s));
+        }
+
+        reCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getRecommendations().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getRecommendations().removeAll(changed.getRemoved());
+            }
+        });
+
+        CheckModel thCheckModel = therapyBox.getCheckModel();
+        thCheckModel.clearChecks();
+        if (!visit.getTherapy().isEmpty()) {
+            visit.getTherapy().forEach(s -> thCheckModel.check(s));
+        }
+
+        thCheckModel.getCheckedItems().addListener((ListChangeListener) changed -> {
+            while (changed.next()) {
+                if (changed.wasAdded()) visit.getTherapy().addAll(changed.getAddedSubList());
+                else if (changed.wasRemoved()) visit.getTherapy().removeAll(changed.getRemoved());
+            }
+        });
+
         log.info("set visit");
     }
 
@@ -666,6 +717,18 @@ public class RootController {
         d_l_s_coord.setUserData("D<S");
         d_m_s_coord.setUserData("D>S");
 
+        nervousSystemBox = new CheckComboBox<>();
+        nervousSystemPane.add(nervousSystemBox, 0, 0);
+
+        pelvicOrganBox = new CheckComboBox<>();
+        pelvicOrganPane.add(pelvicOrganBox, 0, 0);
+
+        recommendationBox = new CheckComboBox<>();
+        recommendationPane.add(recommendationBox, 0, 0);
+
+        therapyBox = new CheckComboBox<>();
+        therapyPane.add(therapyBox, 0, 0);
+
         setDefaultValue();
     }
 
@@ -698,7 +761,8 @@ public class RootController {
 
     @FXML
     private void handleNew() {
-        mainApp.getVisit().clear();
+        visit.clear();
+        //  mainApp.getVisit().clear();
         setDefaultValue();
         mainApp.setVisitFilePath(null);
     }
@@ -823,6 +887,12 @@ public class RootController {
 
         rombergBox.getItems().addAll(properties.getRomberg());
         coordinationTestBox.getItems().addAll(properties.getCoordinationTest());
+
+        nervousSystemBox.getItems().addAll(properties.getNervousSystem());
+        pelvicOrganBox.getItems().addAll(properties.getPelvicOrganProblems());
+
+        recommendationBox.getItems().addAll(properties.getRecommendations());
+        therapyBox.getItems().addAll(properties.getTherapy());
     }
 
     @FXML

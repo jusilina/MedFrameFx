@@ -47,6 +47,12 @@ public class Visit implements PropertyNames {
     private StringProperty snCoordination;
     private ObservableList<String> coordinationTest;
     private ObservableList<String> romberg;
+    private ObservableList<String> nervousSystem;
+    private StringProperty pelvicOrgan;
+    private ObservableList<String> pelvicOrganList;
+    private ObservableList<String> recommendations;
+    private StringProperty recommendationsAdd;
+    private ObservableList<String> therapy;
 
     public Visit() {
         initialise();
@@ -86,6 +92,12 @@ public class Visit implements PropertyNames {
         snCoordination = new SimpleStringProperty();
         coordinationTest = FXCollections.observableArrayList();
         romberg = FXCollections.observableArrayList();
+        nervousSystem = FXCollections.observableArrayList();
+        pelvicOrganList = FXCollections.observableArrayList();
+        pelvicOrgan = new SimpleStringProperty(N);
+        recommendations = FXCollections.observableArrayList();
+        therapy = FXCollections.observableArrayList();
+        recommendationsAdd = new SimpleStringProperty();
     }
 
 
@@ -435,25 +447,63 @@ public class Visit implements PropertyNames {
         this.romberg = romberg;
     }
 
-    public void clear() {
-        initialise();
+    public ObservableList<String> getNervousSystem() {
+        return nervousSystem;
     }
 
+    public void setNervousSystem(ObservableList<String> nervousSystem) {
+        this.nervousSystem = nervousSystem;
+    }
 
-    public void clone(Visit visit) {
-        setName(visit.getName());
-        setDate(visit.getDate());
-        setComplaint(visit.getComplaint());
-        setProfession(visit.getProfession());
-        setSocialAnamnesis(visit.getSocialAnamnesis());
-        setStress(visit.getStress());
-        setComplaintList(visit.getComplaintList());
-        setAnamnesis(visit.getAnamnesis());
-        setConscious(visit.getConscious());
-        setConsciousAdd(visit.getConsciousAdd());
-        setEpileptic(visit.getEpileptic());
-        setCategory(visit.getCategory());
+    public String getPelvicOrgan() {
+        return pelvicOrgan.get();
+    }
 
+    public StringProperty pelvicOrganProperty() {
+        return pelvicOrgan;
+    }
 
+    public void setPelvicOrgan(String pelvicOrgan) {
+        this.pelvicOrgan.set(pelvicOrgan);
+    }
+
+    public ObservableList<String> getPelvicOrganList() {
+        return pelvicOrganList;
+    }
+
+    public void setPelvicOrganList(ObservableList<String> pelvicOrganList) {
+        this.pelvicOrganList = pelvicOrganList;
+    }
+
+    public ObservableList<String> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(ObservableList<String> recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    public String getRecommendationsAdd() {
+        return recommendationsAdd.get();
+    }
+
+    public StringProperty recommendationsAddProperty() {
+        return recommendationsAdd;
+    }
+
+    public void setRecommendationsAdd(String recommendationsAdd) {
+        this.recommendationsAdd.set(recommendationsAdd);
+    }
+
+    public ObservableList<String> getTherapy() {
+        return therapy;
+    }
+
+    public void setTherapy(ObservableList<String> therapy) {
+        this.therapy = therapy;
+    }
+
+    public void clear() {
+        initialise();
     }
 }

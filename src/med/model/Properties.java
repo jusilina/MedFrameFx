@@ -21,6 +21,10 @@ public class Properties {
     private List<String> motions;
     private List<String> romberg;
     private List<String> coordinationTest;
+    private List<String> nervousSystem;
+    private List<String> pelvicOrganProblems;
+    private List<String> recommendations;
+    private List<String> therapy;
 
     @XmlElement(name = "category")
     public List<Category> getCategories() {
@@ -155,5 +159,41 @@ public class Properties {
 
     public void setCoordinationTest(List<String> coordinationTest) {
         this.coordinationTest = coordinationTest;
+    }
+
+    @XmlElement(name = "nervousSystem")
+    public List<String> getNervousSystem() {
+        return nervousSystem;
+    }
+
+    public void setNervousSystem(List<String> nervousSystem) {
+        this.nervousSystem = nervousSystem;
+    }
+
+    @XmlElement(name = "pelvicOrgan")
+    public List<String> getPelvicOrganProblems() {
+        return pelvicOrganProblems;
+    }
+
+    public void setPelvicOrganProblems(List<String> pelvicOrganProblems) {
+        this.pelvicOrganProblems = pelvicOrganProblems;
+    }
+
+    @XmlElement(name = "recommendation")
+    public List<String> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(List<String> recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    @XmlElement(name = "therapy")
+    public List<String> getTherapy() {
+        return therapy;
+    }
+
+    public void setTherapy(List<String> therapy) {
+        this.therapy = therapy;
     }
 }
