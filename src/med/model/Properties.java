@@ -1,12 +1,19 @@
 package med.model;
 
+import med.util.MapAdapter;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @XmlRootElement(name = "parameters")
 public class Properties {
-    private List<Category> categories;
+    @XmlElement
+    @XmlJavaTypeAdapter(MapAdapter.class)
+    private Map<String, Category> categories;
     private List<String> complaints;
     private List<String> emotions;
     private List<String> disturbed_sleep;
@@ -26,14 +33,15 @@ public class Properties {
     private List<String> recommendations;
     private List<String> therapy;
 
-    @XmlElement(name = "category")
-    public List<Category> getCategories() {
+    // @XmlElement(name = "category")
+
+    public Map<String, Category> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
-    }
+//    public void setCategories(Map<String,Category> categories) {
+//        this.categories = categories;
+//    }
 
     @XmlElement(name = "complaint")
     public List<String> getComplaints() {

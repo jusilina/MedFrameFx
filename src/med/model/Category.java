@@ -4,6 +4,9 @@ package med.model;/*
  * and open the template in the editor.
  */
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,29 +17,27 @@ import java.util.Map;
 
 public class Category
 {
-    Map drugs = new HashMap();
+
     String name;
+    @XmlElement(name = "diagnosis")
     String diagnosis;
+    @XmlElement(name = "drug")
+    ArrayList<Drug> drugs = new ArrayList<>();
 
-    public Category(String name)
-    {
-        this.name = name;
-//        drugs = new HashSet<Drug>();
-    }
-
+    @XmlAttribute
     public String getName()
     {
         return name;
     }
-    
+
     public String getDiagnosis()
     {
         return diagnosis;
     }
 
-    public void setDiagnosis(String diagnosis) {
-        this.diagnosis = diagnosis;
-    }
+//    public void setDiagnosis(String diagnosis) {
+//        this.diagnosis = diagnosis;
+//    }
 
     public void setName(String name)
     {
@@ -50,38 +51,25 @@ public class Category
     }
 
 
-
-    public Map getDrugs()
+    public ArrayList<Drug> getDrugs()
     {
         return drugs;
     }
 
-    public void setDrugs(Map drugs)
-    {
-        this.drugs = drugs;
-    }
+    //  public void setDrugs(ArrayList drugs)
+//    {
+//        this.drugs = drugs;
+//    }
     
     public void addDrug(Drug drug)
     {
-        drugs.put(drug.name, drug);
-    }
-    
-    public void addDrug(String drugName)
-    {
-        
-        drugs.put(drugName, new Drug(drugName));
+        // drugs.put(drug.name, drug);
     }
 
-    public void addMarkForDrug(String thisDrug, String mark)
-    {
-       Drug drug = (Drug) drugs.get(thisDrug);
-       drug.getMark().add(mark);
-       
-    }
 
-    public void addDiagnosis(String diagnosis)
-    {
-        this.diagnosis = diagnosis;
-    }
+//    public void addDiagnosis(String diagnosis)
+//    {
+//        this.diagnosis = diagnosis;
+//    }
     
 }

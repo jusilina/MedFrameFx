@@ -6,51 +6,37 @@
 
 package med.model;
 
+import javafx.beans.property.StringProperty;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author Julia
  */
-public class Drug
-{
+public class Drug {
     String name;
-    List mark = new ArrayList();
-    public Drug()
-    {} 
+    private List<String> mark;
 
-    public Drug(String drugName)
-    {
-//        this();
-        this.name = drugName;
-        
-    
-    }
-        
-
-    public String getName()
-    {
+    @XmlAttribute
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public List getMark()
-    {
+    @XmlElement(name = "mark")
+    public List<String> getMark() {
         return mark;
     }
 
-    public void setMark(List mark)
-    {
+    public void setMark(List<String> mark) {
         this.mark = mark;
     }
-    
 
-    
-    
-     
+
 }

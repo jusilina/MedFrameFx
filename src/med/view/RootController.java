@@ -3,7 +3,6 @@ package med.view;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -13,22 +12,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Box;
+
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import med.Main;
 import med.PropertyNames;
+import med.model.PrescriptionDrug;
 import med.model.Properties;
 import med.model.Visit;
 import med.util.FilePrinter;
 import org.controlsfx.control.CheckComboBox;
 import org.controlsfx.control.CheckModel;
 
-import javax.print.attribute.HashPrintRequestAttributeSet;
-import javax.print.attribute.PrintRequestAttributeSet;
-import java.awt.*;
 import java.awt.print.*;
 import java.io.File;
-import java.util.logging.Level;
+import java.time.LocalDate;
 import java.util.logging.Logger;
 
 public class RootController {
@@ -154,9 +152,11 @@ public class RootController {
     @FXML
     private GridPane therapyPane;
     @FXML
-    private ListView therapyListView;
+    private ListView drugsListView;
     @FXML
     private Button addDrugButton;
+    @FXML
+    private Button editDrugButton;
     @FXML
     private ToggleButton workCapacityButton;
     @FXML
@@ -187,13 +187,16 @@ public class RootController {
     private CheckComboBox<String> recommendationBox;
     private CheckComboBox<String> therapyBox;
 
+    private PrescriptionDrug selectedDrug;
+
     public RootController() {
     }
 
     public void setVisit(Visit visit) {
         this.visit = visit;
         //TODO add binding
-        date.setValue(visit.getDate());
+        //  date.setValue(visit.getDate());
+        Bindings.bindBidirectional(date.valueProperty(), visit.getLocalDateProperty());
 
         Bindings.bindBidirectional(name.textProperty(), visit.nameProperty());
         Bindings.bindBidirectional(complaint.textProperty(), visit.complaintProperty());
@@ -546,13 +549,19 @@ public class RootController {
                 else if (changed.wasRemoved()) visit.getTherapy().removeAll(changed.getRemoved());
             }
         });
+        //TODO
+        Bindings.bindContentBidirectional(drugsListView.getItems(), visit.getDrugs());
+        Bindings.bindBidirectional(workCapacityFromDatePicker.valueProperty(), visit.workCapacityFromDateProperty());
+        Bindings.bindBidirectional(workCapacityToDatePicker.valueProperty(), visit.workCapacityToDateProperty());
+        Bindings.bindBidirectional(appearanceDatePicker.valueProperty(), visit.appearanceDateProperty());
+
 
         log.info("set visit");
     }
 
     @FXML
     private void initialize() {
-        showVisitDetails();
+        //showVisitDetails();
         log.info("initialise RootController");
 
         complaintCheckComboBox = new CheckComboBox<>();
@@ -574,6 +583,8 @@ public class RootController {
                 professionGroup.setVisible(true);
             } else {
                 professionGroup.setVisible(false);
+                professionField.clear();
+                stressComboBox.getSelectionModel().clearSelection();
             }
         });
 
@@ -670,11 +681,15 @@ public class RootController {
 
 
         categoryBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-            properties.getCategories().forEach(category -> {
-                if (category.getName().equals(newValue)) {
-                    diagnosisTextArea.setText(category.getDiagnosis());
-                }
-            });
+            diagnosisTextArea.setText(properties.getCategories().get(newValue).getDiagnosis());
+            visit.getDrugs().clear();
+            editDrugButton.setVisible(false);
+            // properties.getCategories().forEach(category -> {
+            //if (category.getName().equals(newValue)) {
+            //   diagnosisTextArea.setText(category.getDiagnosis());
+
+            // }
+            //   });
         });
 
         motionBox = new CheckComboBox<>();
@@ -729,6 +744,49 @@ public class RootController {
         therapyBox = new CheckComboBox<>();
         therapyPane.add(therapyBox, 0, 0);
 
+        drugsListView.setCellFactory(new Callback<ListView<PrescriptionDrug>, ListCell<PrescriptionDrug>>() {
+            @Override
+            public ListCell<PrescriptionDrug> call(ListView<PrescriptionDrug> p) {
+                ListCell<PrescriptionDrug> cell = new ListCell<PrescriptionDrug>() {
+                    @Override
+                    protected void updateItem(PrescriptionDrug drug, boolean bln) {
+                        super.updateItem(drug, bln);
+                        if (drug != null) {
+                            setText(drug.getName() + ":" + drug.getDose());
+                        }
+                    }
+                };
+                return cell;
+            }
+        });
+
+        editDrugButton.setVisible(false);
+        drugsListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (null != newValue) {
+                selectedDrug = (PrescriptionDrug) newValue;
+                editDrugButton.setVisible(true);
+            }
+        });
+
+
+        workCapacityButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            log.info("workCapacityButton listener: " + newValue);
+            if (newValue) {
+                workCapacityButton.setText(PropertyNames.UNABLE_TO_WORK);
+                workCapacityHBox.setVisible(true);
+                workCapacityHBox.setManaged(true);
+            } else {
+                workCapacityButton.setText(PropertyNames.ABLE_TO_WORK);
+                workCapacityHBox.setVisible(false);
+                workCapacityHBox.setManaged(false);
+                workCapacityToDatePicker.setValue(LocalDate.now());
+                workCapacityFromDatePicker.setValue(LocalDate.now());
+            }
+        });
+        workCapacityButton.setSelected(false);
+        workCapacityButton.setText(PropertyNames.ABLE_TO_WORK);
+        workCapacityHBox.setVisible(false);
+        workCapacityHBox.setManaged(false);
         setDefaultValue();
     }
 
@@ -761,7 +819,7 @@ public class RootController {
 
     @FXML
     private void handleNew() {
-        visit.clear();
+        setVisit(mainApp.getNewVisit());
         //  mainApp.getVisit().clear();
         setDefaultValue();
         mainApp.setVisitFilePath(null);
@@ -793,7 +851,7 @@ public class RootController {
      */
     @FXML
     private void handleSave() {
-        fillVisit();
+        //fillVisit();
         File personFile = mainApp.getVisitFilePath();
         if (personFile != null) {
             mainApp.saveVisitDataToFile(personFile);
@@ -804,9 +862,7 @@ public class RootController {
 
     private void fillVisit() {
         if (isInputValid()) {
-            //    visit.setName(name.getText());
             visit.setDate(date.getValue());
-            //     visit.setComplaint(complaint.getText());
         }
     }
 
@@ -819,7 +875,7 @@ public class RootController {
      */
     @FXML
     private void handleSaveAs() {
-        fillVisit();
+        //fillVisit();
         FileChooser fileChooser = new FileChooser();
 
         // Set extension filter
@@ -862,37 +918,42 @@ public class RootController {
 
     public void setProperties(Properties props) {
         this.properties = props;
+        try {
+            categoryBox.getItems().addAll(properties.getCategories().keySet());
+            //  properties.getCategories()..forEach(category -> categoryBox.getItems().add(category.getName()));
+            properties.getComplaints().forEach(complaint -> complaintCheckComboBox.getItems().add(complaint));
 
-        properties.getCategories().forEach(category -> categoryBox.getItems().add(category.getName()));
-        properties.getComplaints().forEach(complaint -> complaintCheckComboBox.getItems().add(complaint));
+            properties.getEmotions().forEach(emotion -> emotionCheckComboBox.getItems().add(emotion));
+            properties.getDisturbed_sleep().forEach(s -> dreamCheckComboBox.getItems().add(s));
 
-        properties.getEmotions().forEach(emotion -> emotionCheckComboBox.getItems().add(emotion));
-        properties.getDisturbed_sleep().forEach(s -> dreamCheckComboBox.getItems().add(s));
+            properties.getCranicalNerve().forEach(nerve -> cranicalNerveBox.getItems().add(nerve));
+            properties.getSensitivityDisbalance().forEach(sens -> sensitivityDisbalanceBox.getItems().add(sens));
 
-        properties.getCranicalNerve().forEach(nerve -> cranicalNerveBox.getItems().add(nerve));
-        properties.getSensitivityDisbalance().forEach(sens -> sensitivityDisbalanceBox.getItems().add(sens));
+            properties.getNervousTension().forEach(tension -> nervousTensionBox.getItems().add(tension));
 
-        properties.getNervousTension().forEach(tension -> nervousTensionBox.getItems().add(tension));
+            upperLimbsBox.getItems().addAll(properties.getLimbReflexes());
+            downLimbsBox.getItems().addAll(properties.getLimbReflexes());
 
-        upperLimbsBox.getItems().addAll(properties.getLimbReflexes());
-        downLimbsBox.getItems().addAll(properties.getLimbReflexes());
+            pReflexesHandBox.getItems().addAll(properties.getpReflexesHand());
+            pReflexesLegBox.getItems().addAll(properties.getpReflexesLeg());
 
-        pReflexesHandBox.getItems().addAll(properties.getpReflexesHand());
-        pReflexesLegBox.getItems().addAll(properties.getpReflexesLeg());
+            aReflexesBox.getItems().addAll(properties.getaReflexes());
 
-        aReflexesBox.getItems().addAll(properties.getaReflexes());
+            motionBox.getItems().addAll(properties.getMotions());
+            muscleBox.getItems().addAll(properties.getMuscleTones());
 
-        motionBox.getItems().addAll(properties.getMotions());
-        muscleBox.getItems().addAll(properties.getMuscleTones());
+            rombergBox.getItems().addAll(properties.getRomberg());
+            coordinationTestBox.getItems().addAll(properties.getCoordinationTest());
 
-        rombergBox.getItems().addAll(properties.getRomberg());
-        coordinationTestBox.getItems().addAll(properties.getCoordinationTest());
+            nervousSystemBox.getItems().addAll(properties.getNervousSystem());
+            pelvicOrganBox.getItems().addAll(properties.getPelvicOrganProblems());
 
-        nervousSystemBox.getItems().addAll(properties.getNervousSystem());
-        pelvicOrganBox.getItems().addAll(properties.getPelvicOrganProblems());
-
-        recommendationBox.getItems().addAll(properties.getRecommendations());
-        therapyBox.getItems().addAll(properties.getTherapy());
+            recommendationBox.getItems().addAll(properties.getRecommendations());
+            therapyBox.getItems().addAll(properties.getTherapy());
+        } catch (Exception e) {
+            // log.finest(e.getStackTrace().toString());
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -916,5 +977,34 @@ public class RootController {
         }
     }
 
+    @FXML
+    public void handleAddDrug() {
+        String category = visit.getCategory();
+        if (null != category && !category.isEmpty())
+            mainApp.showAddDrugDialog(properties.getCategories().get(category));
+        else {
+            log.finer("category is empty");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Внимание");
+            alert.setContentText("Невозможно добавить лекарство. Категория не выбрана\n");
+            alert.showAndWait();
+        }
+
+    }
+
+    @FXML
+    public void handleEditDrug() {
+        String category = visit.getCategory();
+        if (null != selectedDrug && null != category && !category.isEmpty())
+            mainApp.showEditDrugDialog(properties.getCategories().get(category), selectedDrug);
+        else {
+            log.finer("category is empty");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Внимание");
+            alert.setContentText("Редактируемое лекарство не выбрано");
+            alert.showAndWait();
+        }
+        // drugsListView.getCellFactory().         log.info("handleEditDrug finished");
+    }
 }
 

@@ -435,8 +435,8 @@
                              <HBox spacing="10.0">
                                  <children>
                                      <Label layoutX="27.0" layoutY="883.0" text="Лечение"/>
-                                     <GridPane fx:id="therapyPane" layoutX="86.0" layoutY="870.0" prefHeight="25.0"
-                                               prefWidth="150.0">
+                                     <GridPane fx:id="therapyPane" layoutX="86.0" layoutY="870.0" maxHeight="-Infinity"
+                                               minHeight="-Infinity" prefHeight="25.0" prefWidth="150.0">
                                          <columnConstraints>
                                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                                          </columnConstraints>
@@ -444,8 +444,15 @@
                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                          </rowConstraints>
                                      </GridPane>
-                                     <ListView fx:id="therapyListView" prefHeight="89.0" prefWidth="186.0"/>
-                                     <Button fx:id="addDrugButton" mnemonicParsing="false" text="Добавить лекарство"/>
+                                     <ListView fx:id="drugsListView" prefHeight="89.0" prefWidth="186.0"/>
+                                     <VBox spacing="10.0">
+                                         <children>
+                                             <Button fx:id="addDrugButton" mnemonicParsing="false"
+                                                     onAction="#handleAddDrug" text="Добавить лекарство"/>
+                                             <Button fx:id="editDrugButton" mnemonicParsing="false"
+                                                     onAction="#handleEditDrug" text="Изменить лекарство"/>
+                                 </children>
+                                     </VBox>
                                  </children>
                              </HBox>
                              <HBox spacing="10.0">

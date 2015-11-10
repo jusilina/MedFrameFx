@@ -5,10 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import med.model.Category;
+import med.model.PrescriptionDrug;
 import med.model.Properties;
 import med.model.Visit;
+import med.view.AddDrugDialogController;
 import med.view.RootController;
 
 import javax.xml.bind.JAXBContext;
@@ -31,6 +36,11 @@ public class Main extends Application {
     private Visit visit = new Visit();
 
     public Visit getVisit() {
+        return visit;
+    }
+
+    public Visit getNewVisit() {
+        visit = new Visit();
         return visit;
     }
 
@@ -236,13 +246,77 @@ public class Main extends Application {
 
     private void loadPropertiesFromFile() {
         try {
-            JAXBContext context = JAXBContext
-                    .newInstance(Properties.class);
+            JAXBContext context = JAXBContext.newInstance(Properties.class);
             Unmarshaller um = context.createUnmarshaller();
             properties = (Properties) um.unmarshal(new File("properties.xml"));
             System.out.println(properties.toString());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean showAddDrugDialog(Category category) {
+        try {
+            logger.info("showAddDrugDialog for " + category.getName());
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/AddDrugsDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Добавить лекарство");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            AddDrugDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setCategory(category);
+            controller.setDrugsList(visit.getDrugs());
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean showEditDrugDialog(Category category, PrescriptionDrug drug) {
+        try {
+            logger.info("showEditDrugDialog for " + drug.getName());
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/AddDrugsDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Изменить лекарство");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            AddDrugDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setCategory(category);
+            controller.setDrug(drug);
+            controller.setDrugsList(visit.getDrugs());
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

@@ -53,6 +53,10 @@ public class Visit implements PropertyNames {
     private ObservableList<String> recommendations;
     private StringProperty recommendationsAdd;
     private ObservableList<String> therapy;
+    private ObservableList<PrescriptionDrug> drugs;
+    private ObjectProperty<LocalDate> workCapacityFromDate;
+    private ObjectProperty<LocalDate> workCapacityToDate;
+    private ObjectProperty<LocalDate> appearanceDate;
 
     public Visit() {
         initialise();
@@ -98,6 +102,10 @@ public class Visit implements PropertyNames {
         recommendations = FXCollections.observableArrayList();
         therapy = FXCollections.observableArrayList();
         recommendationsAdd = new SimpleStringProperty();
+        drugs = FXCollections.observableArrayList();
+        workCapacityFromDate = new SimpleObjectProperty<>(LocalDate.now());
+        workCapacityToDate = new SimpleObjectProperty<>(LocalDate.from(LocalDate.now()));
+        appearanceDate = new SimpleObjectProperty<>();
     }
 
 
@@ -501,6 +509,53 @@ public class Visit implements PropertyNames {
 
     public void setTherapy(ObservableList<String> therapy) {
         this.therapy = therapy;
+    }
+
+    public ObservableList<PrescriptionDrug> getDrugs() {
+        return drugs;
+    }
+
+    public void setDrugs(ObservableList<PrescriptionDrug> drugs) {
+        this.drugs = drugs;
+    }
+
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    public LocalDate getWorkCapacityFromDate() {
+        return workCapacityFromDate.get();
+    }
+
+    public ObjectProperty<LocalDate> workCapacityFromDateProperty() {
+        return workCapacityFromDate;
+    }
+
+    public void setWorkCapacityFromDate(LocalDate workCapacityFromDate) {
+        this.workCapacityFromDate.set(workCapacityFromDate);
+    }
+
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    public LocalDate getWorkCapacityToDate() {
+        return workCapacityToDate.get();
+    }
+
+    public ObjectProperty<LocalDate> workCapacityToDateProperty() {
+        return workCapacityToDate;
+    }
+
+    public void setWorkCapacityToDate(LocalDate workCapacityToDate) {
+        this.workCapacityToDate.set(workCapacityToDate);
+    }
+
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
+    public LocalDate getAppearanceDate() {
+        return appearanceDate.get();
+    }
+
+    public ObjectProperty<LocalDate> appearanceDateProperty() {
+        return appearanceDate;
+    }
+
+    public void setAppearanceDate(LocalDate appearanceDate) {
+        this.appearanceDate.set(appearanceDate);
     }
 
     public void clear() {

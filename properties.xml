@@ -1,33 +1,48 @@
 ﻿<?xml version="1.1" encoding="UTF-8" ?>
 <parameters>
-    <category>
-        <name>Дисциркуляторная энцефалопатия</name>
-        <diagnosis>Дисциркуляторная энцефалопатия 1,2,3 ст, с цефалгическим, вестибулопатическим
-            синдромами,эмоционально-волевыми, мнестическими нарушениями
-        </diagnosis>
-        <drugs/>
-    </category>
-    <category>
-        <name>Вертеброгенная патология</name>
-        <diagnosis>Вертеброгенная цервикокраниалгия, цервикалгия, торакалгия, люмбалгия, люмбоишалгия, Дискогенная
-            радикулопатия L5 , S1
-        </diagnosis>
-        <drugs/>
-    </category>
+    <categories>
+        <category name="Дисциркуляторная энцефалопатия">
+            <diagnosis>Дисциркуляторная энцефалопатия 1,2,3 ст, с цефалгическим, вестибулопатическим
+                синдромами,эмоционально-волевыми, мнестическими нарушениями
+            </diagnosis>
+            <drug name="Actovegini">
+                <mark>5ml</mark>
+            </drug>
+            <drug name="Cerebrolizini">
+                <mark>5 ml</mark>
+                <mark>10 ml</mark>
+            </drug>
+            <drug name="Citoflavini">
+                <mark>5 ml</mark>
+            </drug>
+            <drug name="Acidi nicotinici"></drug>
+            <drug name="Gliatilini"></drug>
+            <drug name="Mexidoli"></drug>
+            <drug name="Pyracetami"></drug>
+            <drug name="Cortexini"></drug>
+            <drug name="Acatinoli"></drug>
+            <drug name="Galantamini"></drug>
+            <drug name="Donepezil"></drug>
+        </category>
+        <category name="Вертеброгенная патология">
+            <diagnosis>Вертеброгенная цервикокраниалгия, цервикалгия, торакалгия, люмбалгия, люмбоишалгия, Дискогенная
+                радикулопатия L5 , S1
+            </diagnosis>
+            <drugs/>
+        </category>
 
-    <category>
-        <name>Головная боль</name>
-        <diagnosis>Головные боль напряжения, абузусная головная боль, мигрень</diagnosis>
-        <drugs/>
-    </category>
-    <category>
-        <name>Паркинсонизм</name>
-        <diagnosis>Болезнь Паркинсона, акинетико-ригидно-дрожательная форма, ригидно-дрожательная форма,
-            акинетико-ригидная форма, легкие умеренные, выраженные, когнитивные нарушения, эмоционально-волевые
-            нарушения, моторные флуктуации , дискинезии пика дозы , постуральная неустойчивость, 3 стадия по Хен-Яр.
-        </diagnosis>
-        <drugs/>
-    </category>
+        <category name="Головная боль">
+            <diagnosis>Головные боль напряжения, абузусная головная боль, мигрень</diagnosis>
+            <drugs/>
+        </category>
+        <category name="Паркинсонизм">
+            <diagnosis>Болезнь Паркинсона, акинетико-ригидно-дрожательная форма, ригидно-дрожательная форма,
+                акинетико-ригидная форма, легкие умеренные, выраженные, когнитивные нарушения, эмоционально-волевые
+                нарушения, моторные флуктуации , дискинезии пика дозы , постуральная неустойчивость, 3 стадия по Хен-Яр.
+            </diagnosis>
+            <drugs/>
+        </category>
+    </categories>
     <partOfBody>поясница</partOfBody>
     <partOfBody>шея</partOfBody>
     <partOfBody>грудной отдел</partOfBody>
